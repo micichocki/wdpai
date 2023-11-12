@@ -7,7 +7,7 @@ body{
 
 
 nav{
-    background-color: black;
+    background-color: #F2F2F2;
     color:white;
     height: 80px;
     font-size: 1.5rem;
@@ -18,8 +18,24 @@ nav{
     top:0;
 }
 
+.website-name{
+    color: #7949FF;
+    font-family: Lato;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
 nav > ul{
     gap:2em;
+    list-style-type: none;
+    color: #000;
+    font-family: Inter;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
 
 main{
