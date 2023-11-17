@@ -9,29 +9,30 @@ main {
     flex-direction: row; 
     align-items: center; 
     padding-top: 6rem;
+
+
 }
   .main-content {
     flex-grow: 1; 
 }
 
 .welcome-text{
-    width: 28.5625rem;
+    width: 24.5625rem;
     color: #000;
     text-align: center;
     font-family: 'Jomhuria', serif;
     letter-spacing: 0.07rem;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     margin-left: 13.7rem;
-    margin-bottom:1rem;
 }
 .welcome-sub-text{
     color: #000;
     text-align: center;
     font-family: Jomhuria;
-    font-size: 3rem;
+    font-size: 2.6rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -39,7 +40,14 @@ main {
     margin-left: 7.5rem;
     width: 38rem;
 }
-
+.click-here{
+    color: #7949FF;
+    font-family: Jomhuria;
+    font-size: 2.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
 .phone-container {
     width: 19rem;
     height: 31rem;
@@ -102,7 +110,6 @@ label {
     font-size: 2.5rem;
     font-weight: 400;
     display: block;
-    margin-top:0.6rem;
 }
   
 input {
@@ -112,22 +119,6 @@ input {
     font-size: 1rem;
     outline: none; 
     display: block;
-}
-.remember-me-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: left;
-    align-items: center;
-    gap:1.1rem;
-    margin-top: 0.8rem;
-}
-
-.remember-me{
-    color: #000;
-    font-family: Lato,sans-serif;
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-    font-weight: 800;
 }
 
 .submit-button-container::before {
@@ -145,7 +136,7 @@ input {
 
   .submit-button-container {
     position: relative;
-    margin-top: 3.8rem;
+    margin-top: 4rem;
     margin-left: 2rem;
     align-self: center;
     align-self: center;
@@ -199,16 +190,18 @@ input {
 
 @media(max-width:1024px){
     main{
-        margin-top: 2.5rem;
+        margin-top: 1rem;
     }
     .welcome-text{
-        font-size: 5rem;
-        width: 27rem;
+        font-size: 4rem;
     }
     .phone-container{
         width: 40rem;
         height: 34rem;
         margin-left: 2rem;
+    }
+    .welcome-text{
+        width: 27rem;
     }
     .form-group{
         margin-top: 2rem;
@@ -221,7 +214,7 @@ input {
 @media (max-width: 768px) {  
 
     body{
-        padding-top:0.125rem;
+        padding-top:1rem;
         overflow-x: hidden;
     }
 
@@ -230,7 +223,7 @@ input {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding-top: 0;
+        padding-top: 0rem;
       }
     .website-name{
         font-size: 2rem;
@@ -254,7 +247,7 @@ input {
     .phone-container{
         height: 27rem;
         width:17rem;
-        margin-left: 0.4rem;
+        margin-left: 2rem;
         margin-right: 0;
     }
     .phone-nav-bar{
@@ -283,10 +276,10 @@ input {
     .info-container{
         display: block;
         padding: 0rem 1rem;
-        padding-top: 0.7rem;
+        padding-top: 0.2rem;
         margin-top:0.5rem;
         width: 20rem;
-        height: 6rem;
+        height: 5.8rem;
         background: #F2F2F2;
         gap: 0.25rem;
         flex-shrink: 0;
@@ -304,9 +297,8 @@ input {
     }
     .welcome-sub-text{
         margin:0;
-        margin-top:0.4rem;
+        margin-top:0.5rem;
         width: 20rem;
-        font-size: 2.3rem;
     }
     .phone-container::after{
         display: none;
@@ -314,17 +306,12 @@ input {
 }
   
 @media (max-width: 425px) {
-
     .main-content {
         display: none;
       }
-      .nav-buttons-ul{
-        margin-left: 0;
-        margin-top: 0;
-        gap:0;
-      }
+
       .info-container{
-        width: 17rem;
+        width: 14rem;
         margin-top: 0.2rem;
         display:flex;
         justify-content: center;
@@ -332,7 +319,11 @@ input {
       }
       .welcome-sub-text{
         font-size: 2rem;
+        width:10rem;
         margin-right: 0;
         margin-bottom: 1rem;
+      }
+      .click-here{
+        font-size: 2rem;
       }
 }

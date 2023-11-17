@@ -1,74 +1,115 @@
-body{
-    margin:0;
-    margin-top:80px;
-    width:100vw;
-    overflow-x: hidden;
+body {
+    margin: 0;
+    width: 100%;
+
 }
 
+a {
+    text-decoration: none;
+}
 
-nav{
+nav {
     background-color: #F2F2F2;
-    color:white;
+    color: white;
     height: 80px;
     font-size: 1.5rem;
-    width:100%;
-    position:fixed;
-    left:0;
-
-    top:0;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
 }
 
-.website-name{
+.logo {
+    position: absolute;
+    top: 0.3rem;
+    left: 0.5rem;
+}
+
+.website-name {
     color: #7949FF;
     font-family: Lato;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 900;
     line-height: normal;
+    margin-left: 3rem;
 }
 
-nav > ul{
-    gap:2em;
+nav > .nav-buttons-ul {
+    gap: 2em; 
+    margin-left: 1.5em;
+    margin-top: 1.2em;
     list-style-type: none;
     color: #000;
-    font-family: Inter;
     font-size: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-buttons-ul > li {
+    color: #000;
+    font-family: Lato;
     font-style: normal;
     font-weight: 600;
-    line-height: normal;
+    text-decoration: none;
+}
+.nav-text{
+    color: #000;
+    font-size: 2rem; 
+    font-weight: 800;
 }
 
-main{
-    width:100vw;
-    background-color: aquamarine;
-    
-}
-
-main > .elements {
-    background-color: beige;
-    width: calc((100vw/3)*2);
-    display:flex;
-    flex-wrap: wrap;
-    gap:2em;
-    justify-content: center;
-
-}
-
-main > .sidebar{
-    background-color: blueviolet;
-    width: calc(100vw/3);
-    align-self: flex-start;
-}
-
-.elements > .container > img{
-    width:250px;
-    height:250px;
-    object-fit: cover;
-}
-.flex-row-center-center{
-    display:flex;
-    justify-content: center;
+.flex-row-left-center {
+    display: flex;
+    justify-content: left;
     align-items: center;
     flex-direction: row;
 }
 
+
+
+@media (max-width: 768px) {
+    .website-name {
+        font-size: 2.7rem;
+        margin-left: 3.2rem;
+    }
+
+    .nav-buttons-ul > li {
+        font-size: 1.5rem;
+        min-width: 8rem;
+    }
+
+    nav > .nav-buttons-ul{
+        margin-top: 2rem;
+        margin-left: 0;
+        gap: 0.5em;
+        padding-left: 1.5rem;
+    }
+    .nav-text{
+        margin-right: 0rem;
+        font-size: 1.6rem; 
+    }
+}
+
+@media (max-width: 425px) {
+    .website-name {
+        font-size: 2.7rem;
+        margin-left: 3.2rem;
+    }
+
+    .nav-text{
+        font-size: 1.1rem;
+        margin-right: 1rem;
+    }
+    .nav-buttons-ul > li {
+        width: 7rem;
+        font-size: 1rem;
+    }
+
+     nav > .nav-buttons-ul{
+        flex-direction: column;
+        display: block;
+        margin-left: 1rem;
+    }
+}
