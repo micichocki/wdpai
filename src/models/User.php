@@ -2,26 +2,30 @@
 
 class User
 {
-    protected $id;
-    protected $username;
-    protected $email;
-    protected $password;
+    private $email;
+    private $password;
+    private $name;
+    private $surname;
 
-    public function __construct($id, $username, $email, $password)
-    {
-        $this->id = $id;
-        $this->username = $username;
+    public function __construct(
+        string $email,
+        string $password,
+        string $name,
+        string $surname
+    ) {
         $this->email = $email;
         $this->password = $password;
+        $this->name = $name;
+        $this->surname = $surname;
     }
 
-    public function login($enteredPassword)
+    public function getEmail(): string
     {
-        // Logic for user login...
+        return $this->email;
     }
 
-    public function logout()
+    public function getPassword()
     {
-        // Logic for user logout...
+        return $this->password;
     }
 }

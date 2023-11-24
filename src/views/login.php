@@ -41,6 +41,16 @@
         <div class="form-group">
           <form action="/login" id="main-from" method="POST">
 
+            <div class="messages">
+              <?php
+              if (isset($messages)) {
+                foreach ($messages as $message) {
+                  echo $message;
+                }
+              }
+              ?>
+            </div>
+
             <label for="email">e-mail</label>
             <input type="email" id="email" name="email">
 
