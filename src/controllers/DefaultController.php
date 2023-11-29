@@ -7,7 +7,11 @@ class DefaultController extends AppController
 {
     public function index()
     {
-        $this->render('index');
+        if ($this->isGet()) {
+            $this->render('index');
+        }else {
+            die("405 METHOD NOT ALLOWED");
+        }
     }
 
     public function login()
@@ -31,14 +35,20 @@ class DefaultController extends AppController
 
     public function dashboard()
     {
-        $dogs = array(
-            new Dog("Buddy", "Golden Retriever", "Golden", "buddy.jpg"),
-            new Dog("Max", "German Shepherd", "Black and Tan", "max.jpg"),
-            new Dog("Bailey", "Labrador Retriever", "Yellow", "bailey.jpg"),
-            new Dog("Charlie", "Bulldog", "Brindle", "charlie.jpg"),
-            new Dog("Lucy", "Beagle", "Tri-color", "lucy.jpg")
-        );
-        var_dump($dogs);
-        $this->render('dashboard', ["dogs" => $dogs]);
+
+        if ($this->isGet()) {
+            $this->render('dashboard');
+        }else {
+            die("405 METHOD NOT ALLOWED");
+        }
+    }
+
+    public function profile()
+    {
+        if ($this->isGet()) {
+            $this->render('profile');
+        }else {
+            die("405 METHOD NOT ALLOWED");
+        }
     }
 }

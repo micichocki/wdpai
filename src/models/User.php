@@ -6,6 +6,7 @@ class User
     private $password;
     private $name;
     private $surname;
+    private $creation_date;
 
     public function __construct(
         string $email,
@@ -17,6 +18,7 @@ class User
         $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
+        $this->creation_date = new DateTime();
     }
 
     public function getEmail(): string
@@ -27,5 +29,10 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+
+    public function getCreationDate(): DateTime
+    {
+        return $this->creation_date;
     }
 }

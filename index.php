@@ -9,5 +9,6 @@ Router::get('', 'DefaultController');
 Router::post('login', 'SecurityController');
 Router::get('register', 'DefaultController');
 Router::get('dashboard', 'DefaultController');
+Router::get('profile', 'DefaultController');
 
 Router::run($path);
