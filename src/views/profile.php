@@ -64,23 +64,31 @@
                 </svg>
             </div>
 
-
-
-
-
-
         </div>
         <div class="settings-nav">
-            <ul>
-                <li>Personal Info</li>
-                <li>Settings</li>
-                <li>History</li>
+            <ul class="settings-buttons">
+                <li><a href="">Personal Info</a></li>
+                <li><a href="">Settings</a></li>
+                <li><a href="">History</a></li>
+
             </ul>
         </div>
-        <form action="">
-            <label for="">Email</label>
-            <input type="email">
-        </form>
+        <div class="personal-info-container">
+            <form class="personal-info-form" action="">
+
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" placeholder="php@email.com">
+
+                <label for="address">Address</label>
+                <input id="address" type="text" name="address" maxlength="125" placeholder="Dluga Street, Cracow, Poland">
+
+                <label for="tel-number">Tel. No.</label>
+                <input id="tel-number" name="tel-num" type="tel" placeholder="+48 123456789">
+
+                <button type="submit">Confirm</button>
+            </form>
+        </div>
+
     </main>
 
 </body>
