@@ -26,7 +26,7 @@
             <li><a class="nav-text" href="">Contact</a></li>
         </ul>
         <div class="nav-icons">
-            <a href="https://example.com">
+            <a href="dashboard">
                 <svg id="home-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 66 52" fill="none">
                     <path d="M26.5 51.1667V33.4167H39.5V51.1667H55.75V27.5H65.5L33 0.875L0.5 27.5H10.25V51.1667H26.5Z" fill="#7949FF" />
                 </svg>
@@ -44,7 +44,7 @@
                 </svg>
             </a>
 
-            <a href="https://example4.com">
+            <a href="profile">
                 <svg id="profile-icon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 52 52" fill="none">
                     <path d="M26 26C33.1825 26 39 20.1825 39 13C39 5.8175 33.1825 0 26 0C18.8175 0 13 5.8175 13 13C13 20.1825 18.8175 26 26 26ZM26 32.5C17.3225 32.5 0 36.855 0 45.5V52H52V45.5C52 36.855 34.6775 32.5 26 32.5Z" fill="#7949FF" />
                 </svg>
