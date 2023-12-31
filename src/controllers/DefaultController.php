@@ -1,7 +1,6 @@
 <?php
 
 require_once 'AppController.php';
-require_once 'src/models/Dog.php';
 
 class DefaultController extends AppController
 {
@@ -9,8 +8,8 @@ class DefaultController extends AppController
     {
         if ($this->isGet()) {
             $this->render('index');
-        }else {
-            die("405 METHOD NOT ALLOWED");
+        } else {
+            throw new Exception("405");
         }
     }
 
@@ -20,7 +19,7 @@ class DefaultController extends AppController
             $this->render('login');
         }
         if ($this->isPost()) {
-            die("FORM SEND");
+            
         }
     }
     public function register()
@@ -29,7 +28,7 @@ class DefaultController extends AppController
             $this->render('register');
         }
         if ($this->isPost()) {
-            die("FORM SEND");
+
         }
     }
 
@@ -38,8 +37,8 @@ class DefaultController extends AppController
 
         if ($this->isGet()) {
             $this->render('dashboard');
-        }else {
-            die("405 METHOD NOT ALLOWED");
+        } else {
+            throw new Exception("405");
         }
     }
 
@@ -47,8 +46,8 @@ class DefaultController extends AppController
     {
         if ($this->isGet()) {
             $this->render('profile');
-        }else {
-            die("405 METHOD NOT ALLOWED");
+        } else {
+            throw new Exception("405");
         }
     }
 }

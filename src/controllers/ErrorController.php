@@ -2,11 +2,19 @@
 
 require_once 'AppController.php';
 
-class ErrorController extends AppController {
+class ErrorController extends AppController
+{
 
-    public function 404()
+    public function error404()
     {
-        // TODO
+        $this->render('error404');
     }
-
+    public function error401()
+    {
+        $this->render('error401');
+    }
+    public function error()
+    {
+        $this->render('error');
+    }
 }

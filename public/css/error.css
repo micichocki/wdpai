@@ -2,48 +2,31 @@ body{
     margin:0;
     overflow: hidden;
 }
+.illustration-author{
+    font-family: Jomhuria;
+    color: black;
+    text-decoration: none;
 
+}
+
+.main-text{
+    font-family: Jomhuria;
+    font-size:5rem;
+    letter-spacing: 0.08rem;
+    margin-bottom: 0;
+    margin-top:0;
+}
 
 main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top:6rem;
 }
 
-.welcome-text{
-    width: 56rem;
-    height: 2rem;
-    color: #000;
-    text-align: center;
-    font-family: Jomhuria;
-    font-size: 6rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-top: 8.5rem;
-}
 
-.welcome-sub-text{
-    width: 41rem;
-    height: 10.0625rem;
-    color: #000;
-    text-align: center;
-    font-family: Jomhuria;
-    font-size: 4rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-top:2.5rem;
-    margin-bottom: 0;
 
-}
-.illustration-author{
-    font-family: Jomhuria;
-    color: black;
-    text-decoration: none;
-    margin-top:4rem;
-}
 #submit-button {
     display: flex;
     padding: 0rem 1rem;
@@ -66,20 +49,11 @@ main{
     line-height: normal;
     position: relative; 
     z-index: 2;
-    margin-top:2.3rem;
   }
-  .button-a-tag{
+.button-a-tag{
     text-decoration: none;
     color:#F2F2F2;
 }
-  object{
-    width: 500px;
-    height: 500px; 
-    position: fixed;
-    bottom: -10vh;
-    z-index: -90;
-  }
-
 .grey-circle{
     width: 150px;
     height: 150px; 
@@ -120,43 +94,43 @@ main{
     z-index: -10;
     position: fixed;
     bottom: -25vh;
-    right: -12vw;
+    right: -15vw;
     z-index: -99;
 }
+@media(max-width:1440px){
+main{
+    margin-top:8rem;
+}
+.main-text{
+    margin-top: 4rem;
+    margin-bottom: 3rem;
 
+}
 
+}
 @media(max-width:1024px){
-    .welcome-text{
-        width: 36rem;
-        margin-bottom: 7rem;
-    }
-
-    object{
-        width: 20rem;
-        height: 20rem;
-        margin-bottom: 1rem;
-
-    }
-    .illustration-author{
+    .main-text{
+        font-family: Jomhuria;
+        font-size:5rem;
+        letter-spacing: 0.08rem;
+        margin-bottom: 0;
         margin-top:0;
     }
+    
+    main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top:6rem;
+    }
+
     .grey-circle-2{
         top:6rem;
     }
 }
 
 @media(max-width:768px){
-
-    .welcome-text{
-        width:20rem;
-        font-size:4rem;
-        margin-top:6.7rem;
-        margin-bottom:6rem;
-    }
-    .welcome-sub-text{
-        display: none;
-    }
-
     .object-container{
         display: flex;
         justify-content: center;
@@ -166,15 +140,21 @@ main{
         width: 20rem;
         height: 20rem;
     }
+    .main-text{
+        text-align: center;
+        font-size: 3rem;
+    }
 
     .grey-circle-2{
         top:6rem;
+    }
+    .grey-circle-3{
+        visibility: hidden;
     }
 
 }
 
 @media (max-width: 425px) {
-
     .grey-circle{
         display: none;
     }

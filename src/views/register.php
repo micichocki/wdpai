@@ -39,7 +39,7 @@
           <div class="phone-top-element"></div>
         </div>
         <div class="form-group">
-          <form action="/login" id="main-from" method="POST">
+          <form action="/register" id="main-from" method="POST">
 
             <label for="email">e-mail</label>
             <input type="email" id="email" name="email">

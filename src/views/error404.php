@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/global.css" />
-    <link rel="stylesheet" href="/public/css/index.css" />
+    <link rel="stylesheet" href="/public/css/error.css" />
 </head>
 
 <body>
@@ -28,18 +28,17 @@
     </nav>
 
     <main>
-        <h1 class='welcome-text'>Welcome to Kappa, the Tutoring App!</h1>
-        <p class='welcome-sub-text'>Get access to the best tutors in your area. Click the button below to get started:</p>
-        <button id="submit-button"><a class="button-a-tag" href="/register/">Sign Up</a></button>
-        <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
-
+        
+            <div class='object-container'>
+                <object type="image/svg+xml" data="../../static/404-error.svg" width="320" height="320">
+                    Your browser does not support SVG
+                </object>
+            </div>
+            <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
+        <h1 class='main-text'>Ooops.. an error has occurred</h1>
+        <button id="submit-button"><a class='button-a-tag' href="/">Go back</a></button>
     </main>
 
-    <div class='object-container'>
-        <object type="image/svg+xml" data="../../static/video-tutorial.svg" width="500" height="500">
-            Your browser does not support SVG
-        </object>
-    </div>
     <div class='grey-circle'></div>
     <div class='grey-circle-2'></div>
     <div class='grey-circle-3'></div>
