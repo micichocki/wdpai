@@ -4,24 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="/public/css/global.css">
-    <link rel="stylesheet" href="/public/css/profile.css">
+    <title>Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/global.css">
+    <link rel="stylesheet" href="/public/css/tutoring.css">
 </head>
 
 <body>
     <nav class="flex-row-left-center">
         <a href="/">
-        <div class="logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
-                <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
-            </svg>
-
-        </div>    
-        <div class="website-name">Kappa</div>
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
+                    <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
+                </svg>
+            </div>
+            <div class="website-name">Kappa</div>
         </a>
         <ul class="nav-buttons-ul">
             <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
@@ -53,45 +52,6 @@
             </a>
         </div>
     </nav>
-
-    <main>
-        <div class="profile-main-info">
-            <div class="name-credentials">
-                <h1 class="username">Michał Kowalski</h1>
-                <h4 class="date-of-join">Joined 24 may 2023</h4>
-            </div>
-            <div class="avatar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="98" height="113" viewBox="0 0 98 113" fill="none">
-                    <path d="M72.6807 28.2632C72.6807 43.5275 62.0001 55.7632 48.9597 55.7632C35.9193 55.7632 25.2386 43.5275 25.2386 28.2632C25.2386 12.9988 35.9193 0.763153 48.9597 0.763153C62.0001 0.763153 72.6807 12.9988 72.6807 28.2632ZM1.01758 98.2632C1.01758 89.2721 8.82234 82.3948 18.8859 77.7344C28.91 73.0922 40.9488 70.7632 48.9597 70.7632C56.9705 70.7632 69.0094 73.0922 79.0335 77.7344C89.097 82.3948 96.9018 89.2721 96.9018 98.2632V111.763H1.01758V98.2632Z" fill="black" stroke="#7949FF" />
-                </svg>
-            </div>
-
-        </div>
-        <div class="settings-nav">
-            <ul class="settings-buttons">
-                <li><a href="">Personal Info</a></li>
-                <li><a href="">Settings</a></li>
-                <li><a href="">History</a></li>
-
-            </ul>
-        </div>
-        <div class="personal-info-container">
-            <form class="personal-info-form" action="">
-
-                <label for="email">Email</label>
-                <input id="email" type="email" name="email" placeholder="php@email.com">
-
-                <label for="address">Address</label>
-                <input id="address" type="text" name="address" maxlength="125" placeholder="Dluga Street, Cracow, Poland">
-
-                <label for="tel-number">Tel. No.</label>
-                <input id="tel-number" name="tel-num" type="tel" placeholder="+48 123456789">
-
-                <button type="submit">Confirm</button>
-            </form>
-        </div>
-
-    </main>
 
 </body>
 

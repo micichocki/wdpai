@@ -7,8 +7,10 @@ $path = parse_url($path, PHP_URL_PATH);
 
 Router::get('', 'DefaultController');
 Router::post('login', 'SecurityController');
-Router::get('register', 'DefaultController');
-Router::get('dashboard', 'DefaultController');
-Router::get('profile', 'DefaultController');
+Router::get('register', 'SecurityController');
+Router::get('dashboard', 'TutorController');
+Router::get('profile', 'TutorController');
+Router::get('tutoring', 'TutorController');
+
 
 Router::run($path);

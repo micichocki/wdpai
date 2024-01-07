@@ -4,6 +4,16 @@ body{
     overflow-y: hidden;
 }
 
+.messages{
+    display:flex;
+    justify-content: center;
+    font-family: Jomhuria,'sans-serif';
+    font-size:2rem;
+    margin-left:1rem;
+    margin-bottom:1.6rem;
+    height:1px;
+}
+
 main {
     display: flex;
     flex-direction: row; 
@@ -18,7 +28,7 @@ main {
     width: 28.5625rem;
     color: #000;
     text-align: center;
-    font-family: 'Jomhuria', serif;
+    font-family: "Jomhuria", sans-serif;
     letter-spacing: 0.07rem;
     font-size: 4rem;
     font-style: normal;
@@ -30,7 +40,7 @@ main {
 .welcome-sub-text{
     color: #000;
     text-align: center;
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 3rem;
     font-style: normal;
     font-weight: 400;
@@ -88,7 +98,6 @@ main {
 
 }
 .form-group {
-    margin-top:1rem;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px; 
@@ -98,7 +107,7 @@ main {
 label {
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.35);
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 2.5rem;
     font-weight: 400;
     display: block;
@@ -166,7 +175,7 @@ input {
     background: var(--interactive-primary-enabled, #7949FF);
     box-shadow: 0px 4px 8px 0px rgba(101, 92, 128, 0.30);
     color: var(--text-light, #FFF);
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 3.4rem;
     font-style: normal;
     font-weight: 400;
@@ -210,11 +219,12 @@ input {
         height: 34rem;
         margin-left: 2rem;
     }
-    .form-group{
-        margin-top: 2rem;
-    }
+
     #submit-button{
         margin-top:6rem;
+    }
+    .messages{
+        margin-bottom: 2.5rem;
     }
 }
 
@@ -254,15 +264,13 @@ input {
     .phone-container{
         height: 27rem;
         width:17rem;
-        margin-left: 0.4rem;
-        margin-right: 0;
+        margin:0;
+        margin-top:5rem;
     }
     .phone-nav-bar{
         width:17rem;
     }
-    .form-group{
-        margin-top:1rem;
-    }
+
     .submit-button-container{
         margin-top:2rem;
     }
@@ -274,6 +282,9 @@ input {
     #submit-button{
         margin-top: -0.2rem;
         height: 4rem;
+    }
+    .messages{
+        margin-bottom: 1.7rem;
     }
 
     label{
@@ -294,7 +305,7 @@ input {
         background: var(--interactive-primary-enabled, #F2F2F2);
         box-shadow: 0px 4px 8px 0px rgba(101, 92, 128, 0.30);
         color: var(--text-light, #FFF);
-        font-family: Jomhuria;
+        font-family: "Jomhuria", sans-serif;
         font-size: 3.4rem;
         font-style: normal;
         font-weight: 400;

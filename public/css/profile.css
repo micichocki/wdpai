@@ -47,7 +47,7 @@ main{
 
 
 .username{
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size:5rem;
     letter-spacing: 0.21rem;
     font-style: normal;
@@ -55,7 +55,7 @@ main{
 }
 
 .date-of-join{
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size:2.4rem;
     margin-top: 0rem;
 }

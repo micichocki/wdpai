@@ -14,23 +14,25 @@
 
 <body>
   <nav class="flex-row-left-center">
-    <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
-        <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
-      </svg>
+    <a href="/">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
+          <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
+        </svg>
+      </div>
 
-    </div>
-    <div class="website-name">Kappa</div>
+      <div class="website-name">Kappa</div>
+    </a>
     <ul class="nav-buttons-ul">
-      <li><a class="nav-text" href="">About Us</a></li>
-      <li><a class="nav-text" href="">Contact</a></li>
+      <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
+      <li><a class="nav-text" href="https://github.com/micichocki">Contact</a></li>
     </ul>
   </nav>
 
   <main class="flex-row-left-center main">
     <div class="main-content">
       <h1 class="welcome-text">Welcome to the tutoring appointment scheduling platform!</h1>
-      <h1 class="welcome-sub-text">You already have an account? <a class="click-here" href="/login/">Click here</a></h1>
+      <h1 class="welcome-sub-text">You already have an account? <a class="click-here" href="/login">Click here</a></h1>
     </div>
 
     <div class="phone-container">
@@ -41,6 +43,16 @@
         <div class="form-group">
           <form action="/register" id="main-from" method="POST">
 
+            <div class="messages">
+              <?php
+              if (isset($messages)) {
+                foreach ($messages as $message) {
+                  echo $message;
+                }
+              }
+              ?>
+            </div>
+
             <label for="email">e-mail</label>
             <input type="email" id="email" name="email">
 
@@ -48,7 +60,7 @@
             <input type="password" id="password" name="password">
 
             <label for="retype-password">retype password</label>
-            <input type="password" id="retype-password">
+            <input type="password" id="retype-password" name="retype-password">
 
             <div class="submit-button-container">
               <input id="submit-button" type="submit" value="Sign Up">

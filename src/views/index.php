@@ -14,15 +14,16 @@
 
 <body>
     <nav class="flex-row-left-center">
+        <a href="/">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
                 <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
             </svg>
-
         </div>
         <div class="website-name">Kappa</div>
+        </a>
         <ul class="nav-buttons-ul">
-            <li><a class="nav-text" href="">About Us</a></li>
+            <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
             <li><a class="nav-text" href="">Contact</a></li>
         </ul>
     </nav>
@@ -30,7 +31,7 @@
     <main>
         <h1 class='welcome-text'>Welcome to Kappa, the Tutoring App!</h1>
         <p class='welcome-sub-text'>Get access to the best tutors in your area. Click the button below to get started:</p>
-        <button id="submit-button"><a class="button-a-tag" href="/register/">Sign Up</a></button>
+        <button id="submit-button"><a class="button-a-tag" href="/register">Sign Up</a></button>
         <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
 
     </main>

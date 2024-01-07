@@ -1,38 +1,40 @@
 <?php
 
-class User
-{
+class User {
+    private $id;
     private $email;
     private $password;
-    private $name;
-    private $surname;
-    private $creation_date;
+    private $userCredentials;
 
     public function __construct(
         string $email,
         string $password,
-        string $name,
-        string $surname
     ) {
         $this->email = $email;
         $this->password = $password;
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->creation_date = new DateTime();
     }
 
-    public function getEmail(): string
-    {
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function getEmail(): string {
         return $this->email;
     }
 
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
-    public function getCreationDate(): DateTime
-    {
-        return $this->creation_date;
+    public function getUserCredentials() {
+        return $this->userCredentials;
+    }
+
+    public function setUserCredentials(UserCredentials $userCredentials) {
+        $this->userCredentials = $userCredentials;
     }
 }

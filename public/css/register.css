@@ -20,7 +20,7 @@ main {
     width: 24.5625rem;
     color: #000;
     text-align: center;
-    font-family: 'Jomhuria', serif;
+    font-family: "Jomhuria", sans-serif;
     letter-spacing: 0.07rem;
     font-size: 3.5rem;
     font-style: normal;
@@ -31,7 +31,7 @@ main {
 .welcome-sub-text{
     color: #000;
     text-align: center;
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 2.6rem;
     font-style: normal;
     font-weight: 400;
@@ -40,13 +40,25 @@ main {
     margin-left: 7.5rem;
     width: 38rem;
 }
+
+.messages{
+    display:flex;
+    justify-content: center;
+    font-family: Jomhuria,'sans-serif';
+    font-size:2rem;
+    margin-left:1rem;
+    margin-bottom:1.6rem;
+    height:1px;
+}
+
 .click-here{
     color: #7949FF;
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 2.7rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    
 }
 .phone-container {
     width: 19rem;
@@ -96,17 +108,15 @@ main {
 
 }
 .form-group {
-    margin-top:1rem;
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px; 
     align-items: center;
 }
 
 label {
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.35);
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 2.5rem;
     font-weight: 400;
     display: block;
@@ -124,7 +134,7 @@ input {
 .submit-button-container::before {
     content: '';
     position: absolute;
-    top: 50%;
+    top: 37%;
     left: 42%;
     transform: translate(-50%, -50%);
     width: 19.15rem;
@@ -132,6 +142,7 @@ input {
     border-radius: 6.25rem 6.25rem 2.8125rem 2.8125rem;
     background-color: #F2F2F2; 
     z-index: 1; 
+
   }
 
   .submit-button-container {
@@ -157,7 +168,7 @@ input {
     background: var(--interactive-primary-enabled, #7949FF);
     box-shadow: 0px 4px 8px 0px rgba(101, 92, 128, 0.30);
     color: var(--text-light, #FFF);
-    font-family: Jomhuria;
+    font-family: "Jomhuria", sans-serif;
     font-size: 3.4rem;
     font-style: normal;
     font-weight: 400;
@@ -189,6 +200,10 @@ input {
 }
 
 @media(max-width:1024px){
+    .messages{
+        margin-top: 1.5rem;
+        margin-bottom: 3rem;
+    }
     main{
         margin-top: 1rem;
     }
@@ -198,17 +213,12 @@ input {
     .phone-container{
         width: 40rem;
         height: 34rem;
-        margin-left: 2rem;
+        margin-right: 5rem;
     }
     .welcome-text{
         width: 27rem;
     }
-    .form-group{
-        margin-top: 2rem;
-    }
-    #submit-button{
-        margin-top:6rem;
-    }
+
 }
 
 @media (max-width: 768px) {  
@@ -247,15 +257,18 @@ input {
     .phone-container{
         height: 27rem;
         width:17rem;
-        margin-left: 2rem;
-        margin-right: 0;
+        margin:0;
+        margin-top:5rem;
+
     }
     .phone-nav-bar{
         width:17rem;
     }
-    .form-group{
-        margin-top:1rem;
+    .messages{
+        margin-bottom: 1rem;
+        margin-top:0;
     }
+
     .submit-button-container{
         margin-top:2rem;
     }
@@ -287,7 +300,7 @@ input {
         background: var(--interactive-primary-enabled, #F2F2F2);
         box-shadow: 0px 4px 8px 0px rgba(101, 92, 128, 0.30);
         color: var(--text-light, #FFF);
-        font-family: Jomhuria;
+        font-family: "Jomhuria", sans-serif;
         font-size: 3.4rem;
         font-style: normal;
         font-weight: 400;
@@ -309,6 +322,9 @@ input {
     .main-content {
         display: none;
       }
+      .phone-container{
+        margin-left:2.5rem;
+      }
 
       .info-container{
         width: 14rem;
@@ -316,6 +332,7 @@ input {
         display:flex;
         justify-content: center;
         align-items: center;
+        margin-left: 2rem;
       }
       .welcome-sub-text{
         font-size: 2rem;
