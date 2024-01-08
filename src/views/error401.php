@@ -13,31 +13,41 @@
 </head>
 
 <body>
-<nav class="flex-row-left-center">
+    <nav class="flex-row-left-center">
         <a href="/">
-        <div class="logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
-                <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
-            </svg>
-        </div>
-        <div class="website-name">Kappa</div>
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
+                    <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
+                </svg>
+            </div>
+            <div class="website-name">Kappa</div>
         </a>
         <ul class="nav-buttons-ul">
-            <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
             <li><a class="nav-text" href="https://github.com/micichocki">Contact</a></li>
         </ul>
     </nav>
 
     <main>
-        
-            <div class='object-container'>
-                <object type="image/svg+xml" data="../../static/401-error.svg" width="320" height="320">
-                    Your browser does not support SVG
-                </object>
-            </div>
-            <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
+
+        <div class='object-container'>
+            <object type="image/svg+xml" data="../../static/401-error.svg" width="320" height="320">
+                Your browser does not support SVG
+            </object>
+        </div>
+        <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
         <h1 class='main-text'>Ooops.. an error has occurred</h1>
-        <button id="submit-button"><a class='button-a-tag' href="/">Go back</a></button>
+        <?php
+
+        if (isset($_SESSION['user_id'])) {
+            $redirectPath = '/dashboard';
+        } else {
+            $redirectPath = '/';
+        }
+        ?>
+
+        <button id="submit-button">
+            <a class='button-a-tag' href="<?php echo $redirectPath; ?>">Go back</a>
+        </button>
     </main>
 
     <div class='grey-circle'></div>

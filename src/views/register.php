@@ -24,7 +24,6 @@
       <div class="website-name">Kappa</div>
     </a>
     <ul class="nav-buttons-ul">
-      <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
       <li><a class="nav-text" href="https://github.com/micichocki">Contact</a></li>
     </ul>
   </nav>
@@ -41,7 +40,7 @@
           <div class="phone-top-element"></div>
         </div>
         <div class="form-group">
-          <form action="/register" id="main-from" method="POST">
+          <form id="main-from" method="POST">
 
             <div class="messages">
               <?php
@@ -70,7 +69,7 @@
       </div>
     </div>
     <div class="info-container">
-      <h1 class="welcome-sub-text">You already have an account? <a class="click-here" href="">Click here</a></h1>
+      <h1 class="welcome-sub-text">You already have an account? <a class="click-here" href="login">Click here</a></h1>
     </div>
   </main>
 

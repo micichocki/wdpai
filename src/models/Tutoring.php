@@ -1,20 +1,28 @@
 <?php
 
 class Tutoring {
+    private $id;
     private $subject;
     private $date;
     private $price;
-    private $participant;
     private $creator;
     private $description;
+    private $participants = []; // Array to store multiple participants
 
-    public function __construct($subject, $date, $price, $participant, $creator, $description) {
+    public function __construct($subject, $date, $price, $creator, $description) {
         $this->subject = $subject;
         $this->date = $date;
         $this->price = $price;
-        $this->participant = $participant;
         $this->creator = $creator;
         $this->description = $description;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function getSubject() {
@@ -41,14 +49,6 @@ class Tutoring {
         $this->price = $price;
     }
 
-    public function getParticipant() {
-        return $this->participant;
-    }
-
-    public function setParticipant($participant) {
-        $this->participant = $participant;
-    }
-
     public function getCreator() {
         return $this->creator;
     }
@@ -64,5 +64,12 @@ class Tutoring {
     public function setDescription($description) {
         $this->description = $description;
     }
-}
 
+    public function addParticipant($participant) {
+        $this->participants[] = $participant;
+    }
+
+    public function getParticipants() {
+        return $this->participants;
+    }
+}

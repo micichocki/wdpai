@@ -24,7 +24,6 @@
       <div class="website-name">Kappa</div>
     </a>
     <ul class="nav-buttons-ul">
-      <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
       <li><a class="nav-text" href="https://github.com/micichocki">Contact</a></li>
     </ul>
   </nav>

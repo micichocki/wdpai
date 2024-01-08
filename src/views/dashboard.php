@@ -23,8 +23,8 @@
       <div class="website-name">Kappa</div>
     </a>
     <ul class="nav-buttons-ul">
-      <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
       <li><a class="nav-text" href="https://github.com/micichocki">Contact</a></li>
+      <li><a class="nav-text" href="logout">Logout</a></li>
     </ul>
     <div class="nav-icons">
       <a href="dashboard">
@@ -33,7 +33,7 @@
         </svg>
       </a>
 
-      <a href="https://example2.com">
+      <a href="tutoring">
         <svg id="plus-icon" xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 49 46" fill="none">
           <path d="M43.5556 0H5.44444C2.42278 0 0 2.3 0 5.11111V40.8889C0 43.7 2.42278 46 5.44444 46H43.5556C46.55 46 49 43.7 49 40.8889V5.11111C49 2.3 46.55 0 43.5556 0ZM38.1111 25.5556H27.2222V35.7778H21.7778V25.5556H10.8889V20.4444H21.7778V10.2222H27.2222V20.4444H38.1111V25.5556Z" fill="#7949FF" />
         </svg>

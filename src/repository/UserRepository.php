@@ -5,10 +5,21 @@ require_once __DIR__.'/../models/User.php';
 
 class UserRepository extends Repository
 {
+    private static $instance;
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+    
     public function getUserById(int $userId): ?User
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE id = :user_id
+            SELECT * FROM public.users WHERE user_id = :user_id
         ');
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
@@ -41,12 +52,13 @@ class UserRepository extends Repository
             return null;
         }
 
-        return new User(
+        $loggedUser =  new User(
             $user['email'],
             $user['password'],
-            $user['name'],
-            $user['surname']
         );
+
+        $loggedUser->setId($user['user_id']);
+        return $loggedUser;
     }
 
     public function addUser(User $user)
@@ -68,7 +80,4 @@ class UserRepository extends Repository
     }
 
     
-    
-    
-
 }

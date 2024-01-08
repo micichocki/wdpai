@@ -17,13 +17,13 @@ html {
 #home-icon{
     margin-top:0.60rem;
     width:3.6rem;
-    border-radius: 5px; 
-    border-bottom:0.6rem solid #7949FF;
-    padding-bottom: .7rem;
 }
 #plus-icon{
     margin-top:0.85rem;
     width:3.6rem;
+    border-radius: 5px; 
+    border-bottom:0.6rem solid #7949FF;
+    padding-bottom: .7rem;
 }
 #message-icon{
     margin-top:0.85rem;

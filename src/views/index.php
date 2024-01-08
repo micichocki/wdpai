@@ -23,7 +23,6 @@
         <div class="website-name">Kappa</div>
         </a>
         <ul class="nav-buttons-ul">
-            <li><a class="nav-text" href="https://github.com/micichocki">About Us</a></li>
             <li><a class="nav-text" href="">Contact</a></li>
         </ul>
     </nav>
@@ -31,7 +30,7 @@
     <main>
         <h1 class='welcome-text'>Welcome to Kappa, the Tutoring App!</h1>
         <p class='welcome-sub-text'>Get access to the best tutors in your area. Click the button below to get started:</p>
-        <button id="submit-button"><a class="button-a-tag" href="/register">Sign Up</a></button>
+        <button id="submit-button"><a class="button-a-tag" href="/register">Start</a></button>
         <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
 
     </main>
