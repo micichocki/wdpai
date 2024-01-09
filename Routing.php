@@ -24,6 +24,7 @@ class Router
   public static function run($url)
   {
     // try {
+      session_start();
       $action = explode("/", $url)[0];
 
       if (!array_key_exists($action, self::$routes)) {

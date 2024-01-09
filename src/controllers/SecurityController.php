@@ -3,16 +3,18 @@
 require_once 'AppController.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../repository/UserRepository.php';
+require_once __DIR__ . '/../repository/UserCredentialsRepository.php';
 
 class SecurityController extends AppController
 {
     private $userRepository;
+    private $userCredentialsRepository;
 
     public function __construct()
     {
-        session_start();
         parent::__construct();
         $this->userRepository = UserRepository::getInstance();
+        $this->userCredentialsRepository = UserCredentialsRepository::getInstance();
     }
 
     public function login()
@@ -36,6 +38,12 @@ class SecurityController extends AppController
         }
 
         $_SESSION['user_id'] = $user->getId();
+
+        if (!$user->getUserCredentials()) {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/user_credentials");
+            exit();
+        }
 
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/dashboard");
@@ -80,8 +88,47 @@ class SecurityController extends AppController
         unset($_SESSION['user_id']);
 
         $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/");
+        exit();
+    }
+
+    public function user_credentials()
+    {
+        $this->isSessionCorrect();
+        $userId = $_SESSION['user_id'];
+        $user = $this->userRepository->getUserById($userId);
+        if($this->isGet()){
+            if ($user->getUserCredentials()) {
+                $url = "http://$_SERVER[HTTP_HOST]";
+                header("Location: {$url}/dashboard");
+                exit();
+            }
+            return $this->render('user_credentials');
+        }
+        else if($this->isPost()){
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $address = $_POST['address'];
+
+        $newUserCredential = new UserCredentials($name,$surname,$address);
+        $this->userCredentialsRepository->addUserCredentials($userId,$newUserCredential);
+
+        $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/dashboard");
         exit();
+
+        }else{
+            throw new Exception("405");
+        }
+    }
+
+    private function isSessionCorrect()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/login");
+            exit();
+        }
     }
 
     private function checkAuthentication()

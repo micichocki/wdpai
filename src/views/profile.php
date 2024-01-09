@@ -14,12 +14,11 @@
 
 <body>
     <nav class="flex-row-left-center">
-        <a href="/">
+        <a href="<?php echo isset($_SESSION['user_id']) ? '/dashboard' : '/'; ?>">
             <div class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
                     <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
                 </svg>
-
             </div>
             <div class="website-name">Kappa</div>
         </a>

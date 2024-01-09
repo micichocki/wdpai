@@ -34,7 +34,7 @@ class User {
         return $this->userCredentials;
     }
 
-    public function setUserCredentials(UserCredentials $userCredentials) {
+    public function setUserCredentials(int $userCredentials) {
         $this->userCredentials = $userCredentials;
     }
 }

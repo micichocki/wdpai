@@ -30,12 +30,9 @@ class UserRepository extends Repository
             return null;
         }
 
-        return new User(
-            $user['email'],
-            $user['password'],
-            $user['name'],
-            $user['surname']
-        );
+        $newUser = new User($user['email'],$user['password']);
+        $newUser->setUserCredentials($user['user_credentials_id']);
+        return $newUser;
     }
     
     public function getUser(string $email): ?User

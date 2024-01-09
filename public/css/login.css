@@ -37,7 +37,20 @@ main {
     margin-left: 13.7rem;
     margin-bottom:1rem;
 }
+
 .welcome-sub-text{
+    color: #000;
+    text-align: center;
+    font-family: "Jomhuria", sans-serif;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 0;
+    margin-left: 7.5rem;
+    width: 38rem;
+}
+.redirect-link{
     color: #000;
     text-align: center;
     font-family: "Jomhuria", sans-serif;
@@ -206,6 +219,18 @@ input {
     display: none;
 }
 
+.click-here{
+    color: initial;
+    text-decoration: none;
+    color: #7949FF;
+    font-family: "Jomhuria", sans-serif;
+    font-size: 2.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    
+}
+
 @media(max-width:1024px){
     main{
         margin-top: 2.5rem;
@@ -229,12 +254,12 @@ input {
 }
 
 @media (max-width: 768px) {  
+    
 
     body{
         padding-top:0.125rem;
         overflow-x: hidden;
     }
-
     .main{
         display: flex;
         flex-direction: column;
@@ -313,12 +338,15 @@ input {
         cursor: pointer;
         position: relative; 
     }
-    .welcome-sub-text{
+    .redirect-link{
         margin:0;
-        margin-top:0.4rem;
         width: 20rem;
-        font-size: 2.3rem;
+        font-size: 3rem;
     }
+    .click-here{
+        font-size:3rem;
+    }
+
     .phone-container::after{
         display: none;
     }

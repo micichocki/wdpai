@@ -14,12 +14,11 @@
 
 <body>
   <nav class="flex-row-left-center">
-    <a href="/">
+    <a href="<?php echo isset($_SESSION['user_id']) ? '/dashboard' : '/'; ?>">
       <div class="logo">
         <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
           <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
         </svg>
-
       </div>
       <div class="website-name">Kappa</div>
     </a>
@@ -32,6 +31,7 @@
     <div class="main-content">
       <h1 class="welcome-text">It’s nice to see you again!</h1>
       <h1 class="welcome-sub-text">Please log in to begin your journey towards better education.</h1>
+      <h3 class="redirect-link">Don't have an account? <a class="click-here" href="/register">Click here</a></h3>
     </div>
 
     <div class="phone-container">
@@ -70,8 +70,7 @@
       </div>
     </div>
     <div class="info-container">
-      <h1 class="welcome-sub-text">Please log in to begin your journey towards better education.</h1>
-    </div>
+      <h3 class="redirect-link">Don't have an account? <a class="click-here" href="/register">Click here</a></h3>
   </main>
   <div class="grey-circle"></div>
 </body>

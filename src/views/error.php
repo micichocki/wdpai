@@ -14,7 +14,7 @@
 
 <body>
     <nav class="flex-row-left-center">
-        <a href="/">
+        <a href="<?php echo isset($_SESSION['user_id']) ? '/dashboard' : '/'; ?>">
             <div class="logo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="65" height="56" viewBox="0 0 65 56" fill="none">
                     <path d="M0.5 0L34 27L64.5 56H0.5V0Z" fill="#7949FF" />
@@ -36,18 +36,8 @@
         </div>
         <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
         <h1 class='main-text'>Ooops.. an error has occurred</h1>
-
-        <?php
-
-        if (isset($_SESSION['user_id'])) {
-            $redirectPath = '/dashboard';
-        } else {
-            $redirectPath = '/';
-        }
-        ?>
-
         <button id="submit-button">
-            <a class='button-a-tag' href="<?php echo $redirectPath; ?>">Go back</a>
+            <a class='button-a-tag' href="<?php echo isset($_SESSION['user_id']) ? '/dashboard' : '/'; ?>">Go back</a>
         </button>
     </main>
 
