@@ -9,9 +9,11 @@ class User {
     public function __construct(
         string $email,
         string $password,
+        UserCredentials $userCredentials=null,
     ) {
         $this->email = $email;
         $this->password = $password;
+        $this->userCredentials = $userCredentials;
     }
 
     public function getId() {
@@ -34,7 +36,7 @@ class User {
         return $this->userCredentials;
     }
 
-    public function setUserCredentials(int $userCredentials) {
+    public function setUserCredentials($userCredentials) {
         $this->userCredentials = $userCredentials;
     }
 }

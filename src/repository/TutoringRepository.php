@@ -7,6 +7,15 @@ require_once __DIR__ . '/../models/User.php';
 class TutoringRepository extends Repository
 {
     private static $instance;
+    private $subjectRepository;
+    private $userRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->subjectRepository = SubjectRepository::getInstance();
+        $this->userRepository = UserRepository::getInstance();
+    }
 
     public static function getInstance()
     {
@@ -24,31 +33,35 @@ class TutoringRepository extends Repository
             JOIN subjects ON tutoring.subject_id = subjects.subject_id
             WHERE tutoring_id = :tutoring_id
         ');
-    
+
         $stmt->bindParam(':tutoring_id', $tutoringId, PDO::PARAM_INT);
         $stmt->execute();
-    
+
         $tutoringData = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if ($tutoringData === false) {
             return null;
         }
-    
+
+        $subject = $this->subjectRepository->getSubjectById($tutoringData['subject_id']);
+        $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
+
         $tutoring = new Tutoring(
-            $tutoringData['subject_name'],
-            $tutoringData['date_of_meeting'],
+            $subject,
+            $tutoringData['date'],
+            $tutoringData['duration'],
             $tutoringData['price'],
-            $tutoringData['creator_id'],
+            $creator,
             $tutoringData['description']
         );
-    
+
         $tutoring->setId($tutoringData['tutoring_id']);
-    
+
         $participants = $this->getTutoringParticipants($tutoringId);
         foreach ($participants as $participant) {
             $tutoring->addParticipant($participant);
         }
-    
+
         return $tutoring;
     }
 
@@ -73,40 +86,113 @@ class TutoringRepository extends Repository
 
         return $participants;
     }
-    
+
     public function saveTutoring(Tutoring $tutoring)
     {
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO tutoring (date_of_meeting, price, creator_id, subject_id, description)
-            VALUES (:date, :price, :creator_id, :subject_id, :description)
+            INSERT INTO tutoring (date, price, creator_id, subject_id, description,duration)
+            VALUES (:date, :price, :creator_id, :subject_id, :description,:duration)
         ');
-    
+
         $stmt->bindValue(':date', $tutoring->getDate());
         $stmt->bindValue(':price', $tutoring->getPrice());
-        $stmt->bindValue(':creator_id', $tutoring->getCreatorId());
-        $stmt->bindValue(':subject_id', $tutoring->getSubjectId());
+        $stmt->bindValue(':creator_id', $tutoring->getCreator()->getId());
+        $stmt->bindValue(':subject_id', $tutoring->getSubject()->getId());
         $stmt->bindValue(':description', $tutoring->getDescription());
-    
+        $stmt->bindValue(':duration', $tutoring->getDuration());
         $stmt->execute();
-    
+
         $tutoringId = $this->database->connect()->lastInsertId();
-    
 
         foreach ($tutoring->getParticipants() as $participant) {
             $this->saveParticipant($participant->getId(), $tutoringId);
         }
     }
-    
+
     private function saveParticipant(int $userId, int $tutoringId)
     {
         $stmt = $this->database->connect()->prepare('
             INSERT INTO participants (user_id, tutoring_id)
             VALUES (:user_id, :tutoring_id)
         ');
-    
+
         $stmt->bindValue(':user_id', $userId);
         $stmt->bindValue(':tutoring_id', $tutoringId);
-    
+
         $stmt->execute();
     }
+
+
+    public function getAllTutorings(): array
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM tutoring
+            JOIN subjects ON tutoring.subject_id = subjects.subject_id
+        ');
+    
+        $stmt->execute();
+    
+        $tutorings = [];
+        while ($tutoringData = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $subject = $this->subjectRepository->getSubjectById($tutoringData['subject_id']);
+            $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
+            $tutoring = new Tutoring(
+                $subject,
+                $tutoringData['date'],
+                $tutoringData['duration'],
+                $tutoringData['price'],
+                $creator,
+                $tutoringData['description']
+            );
+    
+            $tutoring->setId($tutoringData['tutoring_id']);
+    
+            $participants = $this->getTutoringParticipants($tutoringData['tutoring_id']);
+            foreach ($participants as $participant) {
+                $tutoring->addParticipant($participant);
+            }
+    
+            $tutorings[] = $tutoring;
+        }
+    
+        return $tutorings;
+    }
+
+    public function getTutoringsByUserId(int $userId): array
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT tutoring.* FROM tutoring
+            JOIN participants ON tutoring.tutoring_id = participants.tutoring_id
+            WHERE participants.user_id = :user_id
+        ');
+    
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $tutorings = [];
+        
+        while ($tutoringData = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
+            $subject = $this->subjectRepository->getSubjectById($tutoringData['subject_id']);
+            $tutoring = new Tutoring(
+                $subject,
+                $tutoringData['date'],
+                $tutoringData['duration'],
+                $tutoringData['price'],
+                $creator,
+                $tutoringData['description']
+            );
+    
+            $tutoring->setId($tutoringData['tutoring_id']);
+            $participants = $this->getTutoringParticipants($tutoringData['tutoring_id']);
+            foreach ($participants as $participant) {
+                $tutoring->addParticipant($participant);
+            }
+    
+            $tutorings[] = $tutoring;
+        }
+    
+        return $tutorings;
+    }
+
 }

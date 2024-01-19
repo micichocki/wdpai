@@ -1,13 +1,13 @@
 <?php
 
 require_once 'Repository.php';
-require_once __DIR__.'/../models/Subject.php';
+require_once __DIR__ . '/../models/Subject.php';
 
 class SubjectRepository extends Repository
 {
     private static $instance;
 
-    
+
     public static function getInstance()
     {
         if (self::$instance === null) {
@@ -29,5 +29,35 @@ class SubjectRepository extends Repository
         }
 
         return $subjects;
+    }
+
+    public function getSubjectNameById(int $subjectId): ?string
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT name FROM subjects
+            WHERE subject_id = :subject_id
+        ');
+
+        $stmt->bindParam(':subject_id', $subjectId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $subjectData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $subjectData ? $subjectData['name'] : null;
+    }
+
+    public function getSubjectById(int $subjectId): ?Subject
+    {
+        $stmt = $this->database->connect()->prepare('
+        SELECT name FROM subjects
+        WHERE subject_id = :subject_id
+    ');
+
+        $stmt->bindParam(':subject_id', $subjectId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $subjectData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $subjectData ? new Subject($subjectData['name']) : null;
     }
 }

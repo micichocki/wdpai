@@ -59,13 +59,13 @@ html {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap:4rem;
+    gap:1rem;
     margin-top:2rem;
-
+    flex-wrap: wrap;
 }
 
 .appointment{
-    width: 18rem;
+    width: 28rem;
     height: 9.4rem;
     border-radius: 30px;
     border: 3px solid #7949FF;
@@ -74,6 +74,7 @@ html {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    
 }
 
 .profile-icon-container{
@@ -100,6 +101,12 @@ html {
     letter-spacing: .03rem;
     margin-bottom: 0;
 }
+.subject{
+    margin-top:1rem;
+    margin-left: 6rem;
+    height: 1.4rem;
+    margin-bottom: 0;
+}
 
 .options{
     margin-top:1.2rem;
@@ -118,21 +125,24 @@ h4{
     padding:.2rem;
     padding-left: .7rem;
     padding-right: .7rem;
-
+    transition: background-color 0.3s ease;
+}
+h4:hover{
+    background-color: #F2F2F2;
 }
 .appointment-credentials{
-    width:20rem;
+    width:28rem;
     height: 4rem;
     background-color: #F2F2F2;
     border-radius: 0 0 30px 30px;
     border-top: 10px solid #D9D9D9;
     margin-top:0.5rem;
+    justify-content: space-around;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    padding-left: 1rem;
+    padding-left: 0.2rem;
 }
 
 .available-appointments{
@@ -256,9 +266,31 @@ h4{
     padding-left: .7rem;
     padding-right: .7rem;
     margin-top:0.5rem;
-    margin-left:3rem;
+    margin-left:1rem;
+    transition: background-color 0.3s ease;
+  }
+  .appointment-subject:hover{
+    background-color: #F2F2F2;
   }
   .appointment-time{
+    height: 1.6rem;
+    font-family: Jomhuria;
+    font-size: 1.6rem;
+    letter-spacing: 0.05rem;
+    border-radius: 30px;
+    border: 3px solid #7949FF;
+    background: #FFF;
+    box-shadow: 0px 4px 8px 0px rgba(101, 92, 128, 0.30);
+    padding-left: .7rem;
+    padding-right: .7rem;
+    margin-top:0.5rem;
+    margin-left:1rem;
+    transition: background-color 0.3s ease;
+  }
+  .appointment-time:hover{
+    background-color: #F2F2F2;
+  }
+  .appointment-duration{
     font-family: Jomhuria;
     font-size: 1.6rem;
     letter-spacing: 0.05rem;
@@ -270,10 +302,42 @@ h4{
     padding-left: .7rem;
     padding-right: .7rem;
     margin-top:0.5rem;
-    margin-left:3rem;
+    margin-left:1rem;
+    transition: background-color 0.3s ease;
   }
 
-
+  .appointment-duration:hover{
+    background-color: #F2F2F2;
+  }
+  a{
+    text-decoration: none; 
+    color: inherit;
+    cursor: pointer; 
+  }
+  #submit-button {
+    display: flex;
+    padding: 0rem 1rem;
+    width: 4.5rem;
+    height: 3rem;
+    background: #F2F2F2;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: Jomhuria;
+    font-size:2rem;
+    border-radius: 3.125rem;
+    background: var(--interactive-primary-enabled, #7949FF);
+    color: var(--text-light, #FFF);
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: relative; 
+    z-index: 2;
+    margin-top:.7rem;
+    margin-left:2.4rem;
+    border:none;
+  }
 
  
  @media(max-width:768px){
@@ -313,7 +377,6 @@ h4{
         width:8rem;
         height: 6.2rem;
     }
-
     .avatar > svg{
         width:4rem ;
         height:4rem;
@@ -345,7 +408,16 @@ h4{
         height: 10rem;
     }
     .username{
-        font-size:2.5rem;
+        font-size:2rem;
+    }
+    .subject{
+      margin-left: 2rem;
+    }
+    .duration{
+      margin-top:.8rem;
+    }
+    .date-time{
+      font-size: 1.7rem;
     }
     .rating-num{
         font-size: 2.5rem;
@@ -363,6 +435,21 @@ h4{
     .appointments-container{
         display:block;
         margin:0 5rem;
+    }
+    .appointment-subject{
+      font-size:1.6rem ;
+      padding-top: 0.6rem;
+    }
+    .appointment-duration{
+      height: 2rem;
+      padding-top: .6rem;
+      margin-left:0.5rem
+    
+    }
+    .appointment-time{
+      font-size: 1.6rem;
+      margin-top:.8rem;
+      margin-left:0.5rem;
     }
   }
  

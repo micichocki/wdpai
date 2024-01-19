@@ -13,7 +13,7 @@ class UserCredentials
         $this->name = $name;
         $this->surname = $surname;
         $this->address = $address;
-        $this->dateOfJoin = new DateTime(); // Default to current timestamp if $dateOfJoin is not provided
+        $this->dateOfJoin = new DateTime();
     }
 
 

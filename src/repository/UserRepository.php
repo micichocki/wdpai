@@ -6,6 +6,13 @@ require_once __DIR__.'/../models/User.php';
 class UserRepository extends Repository
 {
     private static $instance;
+    private $userCredentialsRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userCredentialsRepository = UserCredentialsRepository::getInstance();
+    }
 
     public static function getInstance()
     {
@@ -33,7 +40,8 @@ class UserRepository extends Repository
         $newUser = new User($user['email'], $user['password']);
     
         if (isset($user['user_credentials_id'])) {
-            $newUser->setUserCredentials($user['user_credentials_id']);
+            $userCredentials=$this->userCredentialsRepository->getUserCredentialsByUserId($userId);
+            $newUser->setUserCredentials($userCredentials);
         }
     
         return $newUser;

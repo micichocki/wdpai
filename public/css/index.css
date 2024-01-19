@@ -67,6 +67,7 @@ main{
     position: relative; 
     z-index: 2;
     margin-top:2.3rem;
+    border:none;
   }
   .button-a-tag{
     text-decoration: none;

@@ -2,18 +2,20 @@
 
 class Tutoring {
     private $id;
-    private $subjectId; // Updated to represent subject_id
+    private $subject;
     private $date;
+    private $duration;
     private $price;
-    private $creatorId; // Updated to represent creator_id
+    private $creator;
     private $description;
-    private $participants = []; // Array to store multiple participants
+    private $participants = [];
 
-    public function __construct($subjectId, $date, $price, $creatorId, $description) {
-        $this->subjectId = $subjectId;
+    public function __construct($subject, $date, $duration, $price, $creator, $description) {
+        $this->subject = $subject;
         $this->date = $date;
+        $this->duration = $duration;
         $this->price = $price;
-        $this->creatorId = $creatorId;
+        $this->creator = $creator;
         $this->description = $description;
     }
 
@@ -25,12 +27,12 @@ class Tutoring {
         $this->id = $id;
     }
 
-    public function getSubjectId() {
-        return $this->subjectId;
+    public function getSubject() {
+        return $this->subject;
     }
 
-    public function setSubjectId($subjectId) {
-        $this->subjectId = $subjectId;
+    public function setSubject($subject) {
+        $this->subject = $subject;
     }
 
     public function getDate() {
@@ -41,6 +43,14 @@ class Tutoring {
         $this->date = $date;
     }
 
+    public function getDuration() {
+        return $this->duration;
+    }
+
+    public function setDuration($duration) {
+        $this->duration = $duration;
+    }
+
     public function getPrice() {
         return $this->price;
     }
@@ -49,12 +59,12 @@ class Tutoring {
         $this->price = $price;
     }
 
-    public function getCreatorId() {
-        return $this->creatorId;
+    public function getCreator() {
+        return $this->creator;
     }
 
-    public function setCreatorId($creatorId) {
-        $this->creatorId = $creatorId;
+    public function setCreator($creator) {
+        $this->creator = $creator;
     }
 
     public function getDescription() {
