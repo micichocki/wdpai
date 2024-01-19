@@ -89,24 +89,24 @@ class TutoringRepository extends Repository
 
     public function saveTutoring(Tutoring $tutoring)
     {
+        $subjectId = $this->subjectRepository->getSubjectIdByName($tutoring->getSubject()->getName());
+
+        if ($subjectId === null) {
+            return;
+        }
+
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO tutoring (date, price, creator_id, subject_id, description,duration)
-            VALUES (:date, :price, :creator_id, :subject_id, :description,:duration)
+            INSERT INTO tutoring (date, price, creator_id, subject_id, description, duration)
+            VALUES (:date, :price, :creator_id, :subject_id, :description, :duration)
         ');
 
         $stmt->bindValue(':date', $tutoring->getDate());
         $stmt->bindValue(':price', $tutoring->getPrice());
         $stmt->bindValue(':creator_id', $tutoring->getCreator()->getId());
-        $stmt->bindValue(':subject_id', $tutoring->getSubject()->getId());
+        $stmt->bindValue(':subject_id', $subjectId);
         $stmt->bindValue(':description', $tutoring->getDescription());
         $stmt->bindValue(':duration', $tutoring->getDuration());
         $stmt->execute();
-
-        $tutoringId = $this->database->connect()->lastInsertId();
-
-        foreach ($tutoring->getParticipants() as $participant) {
-            $this->saveParticipant($participant->getId(), $tutoringId);
-        }
     }
 
     private function saveParticipant(int $userId, int $tutoringId)
@@ -172,8 +172,9 @@ class TutoringRepository extends Repository
         $tutorings = [];
         
         while ($tutoringData = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $subjectName = $this->subjectRepository->getSubjectNameById($tutoringData['subject_id']);
             $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
-            $subject = $this->subjectRepository->getSubjectById($tutoringData['subject_id']);
+            $subject = new Subject($subjectName);
             $tutoring = new Tutoring(
                 $subject,
                 $tutoringData['date'],

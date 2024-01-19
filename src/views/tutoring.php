@@ -53,6 +53,33 @@
         </div>
     </nav>
 
+    <main>
+    <div class="tutoring-container">
+        <form class="tutoring-form" action="tutoring" method="POST">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+                <?php foreach ($subjects as $subject): ?>
+                    <option value="<?= $subject->getName(); ?>"><?= $subject->getName(); ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="date">Date</label>
+            <input id="date" type="datetime-local" name="date" required>
+
+            <label for="duration">Duration</label>
+            <input id="duration" type="text" name="duration" placeholder="(HH:mm)" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
+
+            <label for="price">Price</label>
+            <input id="price" type="number" name="price" placeholder="(PLN)" min="0" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <button type="submit">Confirm</button>
+        </form>
+    </div>
+</main>
+
 </body>
 
 </html>

@@ -33,7 +33,6 @@ class TutorController extends AppController
             $userId = $_SESSION['user_id'];
             $userTutorings = $this->tutoringRepository->getTutoringsByUserId($userId);
             $userAssignedTutorings = $userTutorings;
-
             $this->render('dashboard', [
                 'allTutorings' => $allTutorings,
                 'userAssignedTutorings' => $userAssignedTutorings,
@@ -86,25 +85,30 @@ class TutorController extends AppController
     {
         $this->checkAuthentication();
         $this->checkUserCredentials();
+    
         if ($this->isGet()) {
             $subjects = $this->subjectRepository->getAllSubjects();
             $this->render('tutoring', ['subjects' => $subjects]);
-        } else if ($this->isPost()) {
-            $subject_name = $_POST['subject_name'] ?? '';
+        } elseif ($this->isPost()) {
             $date = $_POST['date'] ?? '';
             $price = $_POST['price'] ?? '';
             $description = $_POST['description'] ?? '';
             $duration = $_POST['duration'] ?? '';
             $creatorId = $_SESSION['user_id'];
-
+    
             $creator = $this->userRepository->getUserById($creatorId);
-            $subject = new Subject($subject_name);
-            if ($creator === null) {
+            $creator->setId($creatorId);
+            $subject = new Subject($_POST['subject']);
+    
+            if ($creator === null || $subject === null) {
                 return;
             }
-            $tutoring = new Tutoring($subject ,$date,$duration, $price, $creator, $description);
+    
+            $tutoring = new Tutoring($subject, $date, $duration, $price, $creator, $description);
             $this->tutoringRepository->saveTutoring($tutoring);
-        }else{
+            header('Location: /dashboard');
+            exit();
+        } else {
             throw new Exception("405");
         }
     }

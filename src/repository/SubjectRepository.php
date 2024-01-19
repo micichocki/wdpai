@@ -60,4 +60,19 @@ class SubjectRepository extends Repository
 
         return $subjectData ? new Subject($subjectData['name']) : null;
     }
+
+    public function getSubjectIdByName(string $subjectName): ?int
+    {
+        $stmt = $this->database->connect()->prepare('
+        SELECT subject_id FROM subjects
+        WHERE name = :subject_name
+    ');
+
+        $stmt->bindParam(':subject_name', $subjectName, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $subjectData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $subjectData ? (int)$subjectData['subject_id'] : null;
+    }
 }
