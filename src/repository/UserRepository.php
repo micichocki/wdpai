@@ -23,15 +23,19 @@ class UserRepository extends Repository
         ');
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
-
+    
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
         if ($user == false) {
-            return null;
+            throw new Exception("404");
         }
-
-        $newUser = new User($user['email'],$user['password']);
-        $newUser->setUserCredentials($user['user_credentials_id']);
+    
+        $newUser = new User($user['email'], $user['password']);
+    
+        if (isset($user['user_credentials_id'])) {
+            $newUser->setUserCredentials($user['user_credentials_id']);
+        }
+    
         return $newUser;
     }
     
