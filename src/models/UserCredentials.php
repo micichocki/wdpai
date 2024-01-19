@@ -48,7 +48,7 @@ class UserCredentials
     }
     public function getDateOfJoin()
     {
-        return $this->dateOfJoin;
+        return $this->dateOfJoin->format('Y-m-d');
     }
 
 }

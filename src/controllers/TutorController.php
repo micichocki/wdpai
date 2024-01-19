@@ -10,6 +10,7 @@ class TutorController extends AppController
     private $userRepository;
     private $subjectRepository;
     private $tutoringRepository;
+    private $userCredentialsRepository;
 
 
     public function __construct()
@@ -18,6 +19,7 @@ class TutorController extends AppController
         $this->userRepository = UserRepository::getInstance();
         $this->subjectRepository = SubjectRepository::getInstance();
         $this->tutoringRepository = TutoringRepository::getInstance();
+        $this->userCredentialsRepository = UserCredentialsRepository::getInstance();
     }
 
 
@@ -27,13 +29,11 @@ class TutorController extends AppController
         $this->checkUserCredentials();
         
         if ($this->isGet()) {
-
             $allTutorings = $this->tutoringRepository->getAllTutorings();
-    
             $userId = $_SESSION['user_id'];
-            
             $userTutorings = $this->tutoringRepository->getTutoringsByUserId($userId);
             $userAssignedTutorings = $userTutorings;
+
             $this->render('dashboard', [
                 'allTutorings' => $allTutorings,
                 'userAssignedTutorings' => $userAssignedTutorings,
@@ -47,10 +47,11 @@ class TutorController extends AppController
     {
         $this->checkAuthentication();
         $this->checkUserCredentials();
+        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+        $user = $this->userRepository->getUserById($userId);
+    
         if ($this->isGet()) {
-            $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             if ($userId !== null) {
-                $user = $this->userRepository->getUserById($userId);
                 if ($user !== null) {
                     $this->render('profile', ['user' => $user]);
                 } else {
@@ -58,6 +59,23 @@ class TutorController extends AppController
                 }
             } else {
                 $this->render('register');
+            }
+        } elseif ($this->isPost()) {
+            if (isset($_POST['email']) && isset($_POST['address'])) {
+                $email = $_POST['email'];
+                $address = $_POST['address'];
+                $userCredentials = $user->getUserCredentials();         
+                if (!empty($email)) {
+                    $user->setEmail($email);
+                }
+                if (!empty($address)) {
+                    $userCredentials->setAddress($address);
+                }            
+                $user->setId($userId);
+                $this->userCredentialsRepository->updateUserCredentials($user, $userCredentials);
+    
+                header('Location: /profile');
+                exit();
             }
         } else {
             throw new Exception("405");
@@ -81,11 +99,9 @@ class TutorController extends AppController
 
             $creator = $this->userRepository->getUserById($creatorId);
             $subject = new Subject($subject_name);
-
             if ($creator === null) {
                 return;
             }
-
             $tutoring = new Tutoring($subject ,$date,$duration, $price, $creator, $description);
             $this->tutoringRepository->saveTutoring($tutoring);
         }else{

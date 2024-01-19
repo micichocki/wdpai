@@ -140,13 +140,15 @@ color: black;
 }
 
 .personal-info-form > input{
-    margin-bottom: 2rem;
+        margin-bottom: 2rem;
         padding: 10px;
         border: 1px solid #7949FF; 
         border-radius: 8px; 
         font-size: 1rem;
         outline: none; 
         display: block;
+        font-family: 'Jomhuria', sans-serif;
+        font-size: 2rem;
 
 }
 

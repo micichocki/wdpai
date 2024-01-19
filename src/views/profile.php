@@ -56,8 +56,8 @@
     <main>
         <div class="profile-main-info">
             <div class="name-credentials">
-                <h1 class="username">Michał Kowalski</h1>
-                <h4 class="date-of-join">Joined 24 may 2023</h4>
+                <h1 class="username"><?= $user->getUserCredentials()->getName() ?> <?= $user->getUserCredentials()->getSurname() ?></h1>
+                <h4 class="date-of-join">Joined <?= $user->getUserCredentials()->getDateOfJoin() ?></h4>
             </div>
             <div class="avatar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="98" height="113" viewBox="0 0 98 113" fill="none">
@@ -75,16 +75,16 @@
             </ul>
         </div>
         <div class="personal-info-container">
-            <form class="personal-info-form" action="">
-
+            <form class="personal-info-form" action="#" method="POST">
                 <label for="email">Email</label>
-                <input id="email" type="email" name="email" placeholder="php@email.com">
+                <input id="email" type="email" name="email" placeholder="<?= $user->getEmail() ?>">
 
                 <label for="address">Address</label>
-                <input id="address" type="text" name="address" maxlength="125" placeholder="Dluga Street, Cracow, Poland">
-
-                <label for="tel-number">Tel. No.</label>
-                <input id="tel-number" name="tel-num" type="tel" placeholder="+48 123456789">
+                <?php if ($user->getUserCredentials()->getAddress() !== null) : ?>
+                    <input id="address" type="text" name="address" maxlength="125" placeholder="<?= $user->getUserCredentials()->getAddress() ?>">
+                <?php else : ?>
+                    <input id="text" type="text" name="address" maxlength="125">
+                <?php endif; ?>
 
                 <button type="submit">Confirm</button>
             </form>

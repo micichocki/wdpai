@@ -27,6 +27,9 @@ class User {
     public function getEmail(): string {
         return $this->email;
     }
+    public function setEmail($email) {
+        $this->email=$email;
+    }
 
     public function getPassword() {
         return $this->password;
