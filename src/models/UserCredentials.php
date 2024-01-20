@@ -4,15 +4,15 @@ class UserCredentials
 {
     private $name;
     private $surname;
-    private $address;
+    private $city;
     private $dateOfJoin; 
 
 
-    public function __construct($name, $surname, $address)
+    public function __construct($name, $surname, $city)
     {
         $this->name = $name;
         $this->surname = $surname;
-        $this->address = $address;
+        $this->city = $city;
         $this->dateOfJoin = new DateTime();
     }
 
@@ -37,14 +37,14 @@ class UserCredentials
         $this->surname = $surname;
     }
 
-    public function getAddress()
+    public function getCity()
     {
-        return $this->address;
+        return $this->city;
     }
 
-    public function setAddress($address)
+    public function setCity($city)
     {
-        $this->address = $address;
+        $this->city = $city;
     }
     public function getDateOfJoin()
     {

@@ -108,9 +108,9 @@ class SecurityController extends AppController
         else if($this->isPost()){
         $name = $_POST['name'];
         $surname = $_POST['surname'];
-        $address = $_POST['address'];
+        $city = $_POST['city'];
 
-        $newUserCredential = new UserCredentials($name,$surname,$address);
+        $newUserCredential = new UserCredentials($name,$surname,$city);
         $this->userCredentialsRepository->addUserCredentials($userId,$newUserCredential);
 
         $url = "http://$_SERVER[HTTP_HOST]";

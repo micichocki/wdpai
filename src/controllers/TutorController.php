@@ -60,15 +60,15 @@ class TutorController extends AppController
                 $this->render('register');
             }
         } elseif ($this->isPost()) {
-            if (isset($_POST['email']) && isset($_POST['address'])) {
+            if (isset($_POST['email']) && isset($_POST['city'])) {
                 $email = $_POST['email'];
-                $address = $_POST['address'];
+                $city = $_POST['city'];
                 $userCredentials = $user->getUserCredentials();         
                 if (!empty($email)) {
                     $user->setEmail($email);
                 }
-                if (!empty($address)) {
-                    $userCredentials->setAddress($address);
+                if (!empty($city)) {
+                    $userCredentials->setCity($city);
                 }            
                 $user->setId($userId);
                 $this->userCredentialsRepository->updateUserCredentials($user, $userCredentials);

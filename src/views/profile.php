@@ -79,11 +79,11 @@
                 <label for="email">Email</label>
                 <input id="email" type="email" name="email" placeholder="<?= $user->getEmail() ?>">
 
-                <label for="address">Address</label>
-                <?php if ($user->getUserCredentials()->getAddress() !== null) : ?>
-                    <input id="address" type="text" name="address" maxlength="125" placeholder="<?= $user->getUserCredentials()->getAddress() ?>">
+                <label for="city">City</label>
+                <?php if ($user->getUserCredentials()->getCity() !== null) : ?>
+                    <input id="city" type="text" name="city" maxlength="125" placeholder="<?= $user->getUserCredentials()->getCity() ?>">
                 <?php else : ?>
-                    <input id="text" type="text" name="address" maxlength="125">
+                    <input id="text" type="text" name="city" maxlength="125">
                 <?php endif; ?>
 
                 <button type="submit">Confirm</button>

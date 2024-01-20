@@ -46,7 +46,7 @@ class UserCredentialsRepository extends Repository
         return new UserCredentials(
             $userCredentialsData['name'],
             $userCredentialsData['surname'],
-            $userCredentialsData['address']
+            $userCredentialsData['city']
         );
     }
 
@@ -55,14 +55,14 @@ class UserCredentialsRepository extends Repository
         $pdo = $this->database->connect();
 
         $stmt = $pdo->prepare('
-            INSERT INTO usercredentials (name, surname, address, date_of_join)
+            INSERT INTO usercredentials (name, surname, city, date_of_join)
             VALUES (?, ?, ?, ?)
         ');
 
         $stmt->execute([
             $userCredentials->getName(),
             $userCredentials->getSurname(),
-            $userCredentials->getAddress(),
+            $userCredentials->getCity(),
             $userCredentials->getDateOfJoin()
         ]);
 
@@ -100,7 +100,7 @@ class UserCredentialsRepository extends Repository
             $stmtCredentials = $pdo->prepare("
                 UPDATE usercredentials
                 SET
-                    address = :address
+                    city = :city
                 WHERE user_credentials_id = (
                     SELECT user_credentials_id
                     FROM users
@@ -108,7 +108,7 @@ class UserCredentialsRepository extends Repository
                 )
             ");
     
-            $stmtCredentials->bindValue(':address', $userCredentials->getAddress(), PDO::PARAM_STR);
+            $stmtCredentials->bindValue(':city', $userCredentials->getCity(), PDO::PARAM_STR);
             $stmtCredentials->bindValue(':user_id', $user->getId(), PDO::PARAM_INT);
             $stmtCredentials->execute();
     

@@ -48,8 +48,8 @@
                 <label for="surname">Surname *</label>
                 <input id="surname" type="text" name="surname" maxlength="125" placeholder="Smith">
 
-                <label for="address">Address</label>
-                <input id="address" name="address" type="text" placeholder="Dluga Street, Cracow, Poland">
+                <label for="city">City</label>
+                <input id="city" name="city" type="text" placeholder="Cracow">
 
                 <button type="submit">Confirm</button>
             </form>
