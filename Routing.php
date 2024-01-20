@@ -4,6 +4,8 @@ require_once 'src/controllers/DefaultController.php';
 require_once 'src/controllers/SecurityController.php';
 require_once 'src/controllers/ErrorController.php';
 require_once 'src/controllers/TutorController.php';
+require_once 'src/controllers/AdminController.php';
+
 
 
 class Router
@@ -24,17 +26,17 @@ class Router
   public static function run($url)
   {
     // try {
-      session_start();
-      $action = explode("/", $url)[0];
+    session_start();
+    $action = explode("/", $url)[0];
 
-      if (!array_key_exists($action, self::$routes)) {
-        throw new Exception("404");
-      }
+    if (!array_key_exists($action, self::$routes)) {
+      throw new Exception("404");
+    }
 
-      $controller = self::$routes[$action];
-      $object = new $controller;
-      $action = $action ?: 'index';
-      $object->$action();
+    $controller = self::$routes[$action];
+    $object = new $controller;
+    $action = $action ?: 'index';
+    $object->$action();
     // } catch (Exception $e) {
     //   $errorController = new ErrorController();
     //   if ($e->getMessage() === "404") {

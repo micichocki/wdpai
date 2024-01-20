@@ -53,32 +53,37 @@ class SecurityController extends AppController
     public function register()
     {
         $this->checkAuthentication();
+    
         if (!$this->isPost()) {
             return $this->render('register');
         }
-
+    
         $email = $_POST['email'];
         $password = $_POST['password'];
         $retype_password = $_POST['retype-password'];
-
-
+    
         if (strlen($password) < 4) {
             return $this->render('register', ['messages' => ['Password is too short.']]);
         }
-
+    
         if ($password !== $retype_password) {
             return $this->render('register', ['messages' => ['Passwords do not match.']]);
         }
-
+    
+        $allUsers = $this->userRepository->getAllUsers();
+    
+        foreach ($allUsers as $existingUser) {
+            if ($existingUser->getEmail() === $email || password_verify($password, $existingUser->getPassword())) {
+                return $this->render('register', ['messages' => ['Wrong credentials.']]);
+            }
+        }
+    
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
         $user = new User($email, $hashedPassword);
-
         $this->userRepository->addUser($user);
-
+    
         return $this->render('login', ['messages' => ['Registration successful!']]);
     }
-
 
     public function logout()
     {

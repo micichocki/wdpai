@@ -55,6 +55,15 @@
   </nav>
 
   <main>
+    <div class="messages">
+      <?php
+      if (isset($messages)) {
+        foreach ($messages as $message) {
+          echo $message;
+        }
+      }
+      ?>
+    </div>
     <h1 class='appointment-label'>Booked tutorings</h1>
     <div class='appointments-container'>
       <?php if (empty($userAssignedTutorings)) : ?>
@@ -77,7 +86,7 @@
               <h4 class='date-time'><?= $userTutoring->getDate() ?></h4>
               <h4 class="duration">Duration: <?= $userTutoring->getDuration(); ?></h4>
               <button class="remove-button" data-tutoring-id="<?= $userTutoring->getId(); ?>">
-              x
+                x
               </button>
             </div>
           </div>
@@ -96,32 +105,47 @@
           </button>
         </div>
       </form>
+      <?php if (empty($allTutorings)) : ?>
+        <a class='click-here' href="tutoring">
+          <div class="empty-appointments">
+            <h4>There is no available appointments. Click here to add one</h4>
+          </div>
+        </a>
+      <?php else : ?>
+        <?php foreach ($allTutorings as $userTutoring) : ?>
+          <div class="available-appointment">
+            <div class="profile-icon-container">
+              <svg class="appointment-profile-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 53 52" fill="none">
+                <path d="M26.5 26C33.6825 26 39.5 20.1825 39.5 13C39.5 5.81753 33.6825 0 26.5 0C19.3175 0 13.5 5.81753 13.5 13C13.5 20.1825 19.3175 26 26.5 26ZM26.5 32.5C17.8225 32.5 0.5 36.8551 0.5 45.5V52H52.5V45.5C52.5 36.8551 35.1775 32.5 26.5 32.5Z" fill="black" />
+              </svg>
+            </div>
+            <h3 class='username'><?= $userTutoring->getCreator()->getUserCredentials()->getName() ?> <?= $userTutoring->getCreator()->getUserCredentials()->getSurname() ?></h3>
+            <?php if ($userTutoring->getCreator()->getUserCredentials()->getCity()) : ?>
+              <div class="localization">
+                <svg class='localization-icon' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 56 80" fill="none">
+                  <path d="M28 0C12.52 0 0 12.52 0 28C0 49 28 80 28 80C28 80 56 49 56 28C56 12.52 43.48 0 28 0ZM28 38C22.48 38 18 33.52 18 28C18 22.48 22.48 18 28 18C33.52 18 38 22.48 38 28C38 33.52 33.52 38 28 38Z" fill="#7949FF" />
+                </svg>
 
-      <?php foreach ($allTutorings as $userTutoring) : ?>
-        <div class="available-appointment">
-          <div class="profile-icon-container">
-            <svg class="appointment-profile-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 53 52" fill="none">
-              <path d="M26.5 26C33.6825 26 39.5 20.1825 39.5 13C39.5 5.81753 33.6825 0 26.5 0C19.3175 0 13.5 5.81753 13.5 13C13.5 20.1825 19.3175 26 26.5 26ZM26.5 32.5C17.8225 32.5 0.5 36.8551 0.5 45.5V52H52.5V45.5C52.5 36.8551 35.1775 32.5 26.5 32.5Z" fill="black" />
-            </svg>
-          </div>
-          <h3 class='username'><?= $userTutoring->getCreator()->getUserCredentials()->getName() ?> <?= $userTutoring->getCreator()->getUserCredentials()->getSurname() ?></h3>
-          <div class="localization">
-            <svg class='localization-icon' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 56 80" fill="none">
-              <path d="M28 0C12.52 0 0 12.52 0 28C0 49 28 80 28 80C28 80 56 49 56 28C56 12.52 43.48 0 28 0ZM28 38C22.48 38 18 33.52 18 28C18 22.48 22.48 18 28 18C33.52 18 38 22.48 38 28C38 33.52 33.52 38 28 38Z" fill="#7949FF" />
-            </svg>
-            <h5 class="localization-name">Cracow</h5>
-          </div>
-          <div class="apply">
+                <h5 class="localization-name"><?= $userTutoring->getCreator()->getUserCredentials()->getCity() ?></h5>
 
-            <button id="submit-button" class="apply-button" data-tutoring-id="<?= $userTutoring->getId(); ?>">
-              Apply
-            </button>
+              </div>
+            <?php endif; ?>
+            <div class="apply">
+
+
+              <button id="submit-button" class="apply-button" data-tutoring-id="<?= $userTutoring->getId(); ?>" data-creator-id="<?= $userTutoring->getCreator()->getId(); ?>">
+                Apply
+              </button>
+            </div>
+
+            <h5 class='appointment-subject'><?= $userTutoring->getSubject()->getName(); ?></h5>
+            <h5 class="appointment-duration">Duration: <?= $userTutoring->getDuration(); ?></h5>
+            <h4 class='appointment-time'><?= $userTutoring->getDate() ?></h4>
           </div>
-          <h5 class='appointment-subject'><?= $userTutoring->getSubject()->getName(); ?></h5>
-          <h5 class="appointment-duration">Duration: <?= $userTutoring->getDuration(); ?></h5>
-          <h4 class='appointment-time'><?= $userTutoring->getDate() ?></h4>
-        </div>
-      <?php endforeach; ?>
+        <?php endforeach; ?>
+      <?php endif; ?>
+
+
       <div id="user-id"><?= $_SESSION['user_id'] ?></div>
       <div>
       </div>

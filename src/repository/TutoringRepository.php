@@ -45,7 +45,7 @@ class TutoringRepository extends Repository
 
         $subject = $this->subjectRepository->getSubjectById($tutoringData['subject_id']);
         $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
-
+        $creator->setId($tutoringData['creator_id']);
         $tutoring = new Tutoring(
             $subject,
             $tutoringData['date'],
@@ -122,6 +122,7 @@ class TutoringRepository extends Repository
         while ($tutoringData = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $subject = $this->subjectRepository->getSubjectById($tutoringData['subject_id']);
             $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
+            $creator->setId($tutoringData['creator_id']);
             $tutoring = new Tutoring(
                 $subject,
                 $tutoringData['date'],
@@ -154,6 +155,7 @@ class TutoringRepository extends Repository
         while ($tutoringData = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $subjectName = $this->subjectRepository->getSubjectNameById($tutoringData['subject_id']);
             $creator = $this->userRepository->getUserById($tutoringData['creator_id']);
+            $creator->setId($tutoringData['creator_id']);
             $subject = new Subject($subjectName);
             $tutoring = new Tutoring(
                 $subject,

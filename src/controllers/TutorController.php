@@ -132,9 +132,9 @@ class TutorController extends AppController
                 $success = $this->participantsRepository->saveParticipation($userId, $tutoringId);
 
                 if ($success) {
-                    echo json_encode(['success' => true]);
+                    echo json_encode(['success' => true, ]);
                 } else {
-                    echo json_encode(['success' => false, 'error' => 'Failed to save participation']);
+                    echo json_encode(['success' => false]);
                 }
             } else {
                 echo json_encode(['success' => false, 'error' => 'Invalid request']);

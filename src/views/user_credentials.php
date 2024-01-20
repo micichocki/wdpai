@@ -10,9 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
+    <script src="../../public/js/user_credentials.js"></script>
 </head>
 
 <body>
+
     <nav class="flex-row-left-center">
         <a href="<?php echo isset($_SESSION['user_id']) ? '/dashboard' : '/'; ?>">
             <div class="logo">
@@ -29,6 +31,16 @@
     </nav>
 
     <main>
+
+        <div class="messages">
+            <?php
+            if (isset($messages)) {
+                foreach ($messages as $message) {
+                    echo $message;
+                }
+            }
+            ?>
+        </div>
         <div class="settings-nav">
             <ul class="settings-buttons">
                 <li><a href="">Personal Info</a></li>

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Repository.php';
-require_once __DIR__.'/../models/User.php';
+require_once __DIR__ . '/../models/User.php';
 
 class UserRepository extends Repository
 {
@@ -22,7 +22,7 @@ class UserRepository extends Repository
 
         return self::$instance;
     }
-    
+
     public function getUserById(int $userId): ?User
     {
         $stmt = $this->database->connect()->prepare('
@@ -30,23 +30,23 @@ class UserRepository extends Repository
         ');
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
-    
+
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         if ($user == false) {
             throw new Exception("404");
         }
-    
+
         $newUser = new User($user['email'], $user['password']);
-    
+
         if (isset($user['user_credentials_id'])) {
-            $userCredentials=$this->userCredentialsRepository->getUserCredentialsByUserId($userId);
+            $userCredentials = $this->userCredentialsRepository->getUserCredentialsByUserId($userId);
             $newUser->setUserCredentials($userCredentials);
         }
-    
+
         return $newUser;
     }
-    
+
     public function getUser(string $email): ?User
     {
         $stmt = $this->database->connect()->prepare('
@@ -88,5 +88,72 @@ class UserRepository extends Repository
         $user->setId($userId);
     }
 
+    public function getAllUsers(): array
+    {
+        $stmt = $this->database->connect()->query('SELECT * FROM public.users');
+        $usersData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = [];
+        foreach ($usersData as $userData) {
+            $user = new User($userData['email'], $userData['password']);
+
+            if (isset($userData['user_credentials_id'])) {
+                $userCredentials = $this->userCredentialsRepository->getUserCredentialsByUserId($userData['user_id']);
+                $user->setUserCredentials($userCredentials);
+            }
+
+            $user->setId($userData['user_id']);
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    public function isUserPrivileged(int $userId): bool
+    {
+        $stmt = $this->database->connect()->prepare('
+        SELECT privileged FROM public.users WHERE user_id = :user_id
+    ');
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchColumn();
+
+        if ($result === false) {
+            throw new Exception("404");
+        }
+
+        return (bool)$result;
+    }
+
+    public function deleteUser(int $userId): bool
+    {
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM public.users WHERE user_id = :user_id
+        ');
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $success = $stmt->execute();
     
+        if ($success) {
+            $stmt = $this->database->connect()->prepare('
+                DELETE FROM public.tutorings WHERE user_id = :user_id
+            ');
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $stmt = $this->database->connect()->prepare('
+                DELETE FROM public.participants WHERE user_id = :user_id
+            ');
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $stmt = $this->database->connect()->prepare('
+                DELETE FROM public.usercredentials WHERE user_id = :user_id
+            ');
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    
+        return $success;
+    }
 }

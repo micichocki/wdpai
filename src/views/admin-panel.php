@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/global.css">
-    <link rel="stylesheet" href="/public/css/tutoring.css">
-    <script src="../../public/js/tutoring.js"></script>
+    <link rel="stylesheet" href="/public/css/admin-panel.css">
+    <script src="../../public/js/admin-panel.js"></script>
 </head>
 
 <body>
@@ -55,7 +55,6 @@
     </nav>
 
     <main>
-
         <div class="messages">
             <?php
             if (isset($messages)) {
@@ -66,30 +65,33 @@
             ?>
         </div>
 
-        <div class="tutoring-container">
-            <form class="tutoring-form" action="tutoring" method="POST">
-                <label for="subject">Subject</label>
-                <select id="subject" name="subject" required>
-                    <?php foreach ($subjects as $subject) : ?>
-                        <option value="<?= $subject->getName(); ?>"><?= $subject->getName(); ?></option>
-                    <?php endforeach; ?>
-                </select>
+        <?php foreach ($allUsers as $user) : ?>
+            <?php if ($user->getUserCredentials() != null) : ?>
+                <div class="user-card">
+                    <div class="avatar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="98" height="113" viewBox="0 0 98 113" fill="none">
+                            <path d="M72.6807 28.2632C72.6807 43.5275 62.0001 55.7632 48.9597 55.7632C35.9193 55.7632 25.2386 43.5275 25.2386 28.2632C25.2386 12.9988 35.9193 0.763153 48.9597 0.763153C62.0001 0.763153 72.6807 12.9988 72.6807 28.2632ZM1.01758 98.2632C1.01758 89.2721 8.82234 82.3948 18.8859 77.7344C28.91 73.0922 40.9488 70.7632 48.9597 70.7632C56.9705 70.7632 69.0094 73.0922 79.0335 77.7344C89.097 82.3948 96.9018 89.2721 96.9018 98.2632V111.763H1.01758V98.2632Z" fill="black" stroke="#7949FF" />
+                        </svg>
+                    </div>
+                    <h3 class='username'><?= $user->getUserCredentials()->getName() ?> <?= $user->getUserCredentials()->getSurname() ?></h3>
+                    <?php if ($user->getUserCredentials()->getCity()) : ?>
+                        <div class="localization">
+                            <svg class='localization-icon' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 56 80" fill="none">
+                                <path d="M28 0C12.52 0 0 12.52 0 28C0 49 28 80 28 80C28 80 56 49 56 28C56 12.52 43.48 0 28 0ZM28 38C22.48 38 18 33.52 18 28C18 22.48 22.48 18 28 18C33.52 18 38 22.48 38 28C38 33.52 33.52 38 28 38Z" fill="#7949FF" />
+                            </svg>
+                            <h5 class="localization-name"><?= $user->getUserCredentials()->getCity() ?></h5>
+                        </div>
+                    <?php endif; ?>
+                    <div class='bottom-credentials'>
+                        <h5 class='email'><?= $user->getEmail(); ?></h5>
+                        <button class="remove-button" user-id="<?= $user->getId(); ?>">
+                            x
+                        </button>
+                    </div>
 
-                <label for="date">Date</label>
-                <input id="date" type="datetime-local" name="date" required>
-
-                <label for="duration">Duration</label>
-                <input id="duration" type="text" name="duration" placeholder="(HH:mm)" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
-
-                <label for="price">Price</label>
-                <input id="price" type="number" name="price" placeholder="(PLN)" min="0" required>
-
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
-
-                <button type="submit">Confirm</button>
-            </form>
-        </div>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </main>
 
 </body>

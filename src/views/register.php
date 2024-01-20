@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/public/css/global.css" />
   <link rel="stylesheet" href="/public/css/register.css" />
+  <script src="../../public/js/register.js"></script>
 </head>
 
 <body>
