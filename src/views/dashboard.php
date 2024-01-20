@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/public/css/global.css">
   <link rel="stylesheet" href="/public/css/dashboard.css">
+  <script src="../../public/js/dashboard.js"></script>
 </head>
 
 <body>
@@ -56,24 +57,32 @@
   <main>
     <h1 class='appointment-label'>Booked tutorings</h1>
     <div class='appointments-container'>
-      <?php foreach ($userAssignedTutorings as $userTutoring) : ?>
-        <div class='appointment'>
-          <div class='profile-icon-container'>
-            <svg class='appointment-profile-icon' xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 53 52' fill='none'>
-              <path d='M26.5 26C33.6825 26 39.5 20.1825 39.5 13C39.5 5.81753 33.6825 0 26.5 0C19.3175 0 13.5 5.81753 13.5 13C13.5 20.1825 19.3175 26 26.5 26ZM26.5 32.5C17.8225 32.5 0.5 36.8551 0.5 45.5V52H52.5V45.5C52.5 36.8551 35.1775 32.5 26.5 32.5Z' fill='black' />
-            </svg>
-          </div>
-          <h3 class='username'><?= $userTutoring->getCreator()->getUserCredentials()->getName() ?> <?= $userTutoring->getCreator()->getUserCredentials()->getSurname() ?></h3>
-          <h4 class='subject'><?= $userTutoring->getSubject()->getName() ?></h4>
-
-
-          <div class='appointment-credentials'>
-            <h4 class='date-time'><?= $userTutoring->getDate() ?></h4>
-            <h4 class="duration">Duration: <?= $userTutoring->getDuration(); ?></h4>
-          </div>
+      <?php if (empty($userAssignedTutorings)) : ?>
+        <div class="empty-appointments">
+          <h4>You have no Booked Tutorings</h4>
         </div>
-      <?php endforeach; ?>
+      <?php else : ?>
+        <?php foreach ($userAssignedTutorings as $userTutoring) : ?>
+          <div class='appointment'>
+            <div class='profile-icon-container'>
+              <svg class='appointment-profile-icon' xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 53 52' fill='none'>
+                <path d='M26.5 26C33.6825 26 39.5 20.1825 39.5 13C39.5 5.81753 33.6825 0 26.5 0C19.3175 0 13.5 5.81753 13.5 13C13.5 20.1825 19.3175 26 26.5 26ZM26.5 32.5C17.8225 32.5 0.5 36.8551 0.5 45.5V52H52.5V45.5C52.5 36.8551 35.1775 32.5 26.5 32.5Z' fill='black' />
+              </svg>
+            </div>
+            <h3 class='username'><?= $userTutoring->getCreator()->getUserCredentials()->getName() ?> <?= $userTutoring->getCreator()->getUserCredentials()->getSurname() ?></h3>
+            <h4 class='subject'><?= $userTutoring->getSubject()->getName() ?></h4>
 
+
+            <div class='appointment-credentials'>
+              <h4 class='date-time'><?= $userTutoring->getDate() ?></h4>
+              <h4 class="duration">Duration: <?= $userTutoring->getDuration(); ?></h4>
+              <button class="remove-button" data-tutoring-id="<?= $userTutoring->getId(); ?>">
+              x
+              </button>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
     <h1 class='appointment-label'>Available tutorings</h1>
     <div class="available-appointments">
@@ -88,7 +97,7 @@
         </div>
       </form>
 
-      <?php foreach ($userAssignedTutorings as $userTutoring) : ?>
+      <?php foreach ($allTutorings as $userTutoring) : ?>
         <div class="available-appointment">
           <div class="profile-icon-container">
             <svg class="appointment-profile-icon" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 53 52" fill="none">
@@ -103,19 +112,19 @@
             <h5 class="localization-name">Cracow</h5>
           </div>
           <div class="apply">
-          <button id="submit-button"><a class="button-a-tag" href="#">Apply</a></button>
+
+            <button id="submit-button" class="apply-button" data-tutoring-id="<?= $userTutoring->getId(); ?>">
+              Apply
+            </button>
           </div>
           <h5 class='appointment-subject'><?= $userTutoring->getSubject()->getName(); ?></h5>
           <h5 class="appointment-duration">Duration: <?= $userTutoring->getDuration(); ?></h5>
           <h4 class='appointment-time'><?= $userTutoring->getDate() ?></h4>
         </div>
       <?php endforeach; ?>
-
+      <div id="user-id"><?= $_SESSION['user_id'] ?></div>
       <div>
       </div>
-
-
-
 
     </div>
 

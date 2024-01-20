@@ -109,20 +109,6 @@ class TutoringRepository extends Repository
         $stmt->execute();
     }
 
-    private function saveParticipant(int $userId, int $tutoringId)
-    {
-        $stmt = $this->database->connect()->prepare('
-            INSERT INTO participants (user_id, tutoring_id)
-            VALUES (:user_id, :tutoring_id)
-        ');
-
-        $stmt->bindValue(':user_id', $userId);
-        $stmt->bindValue(':tutoring_id', $tutoringId);
-
-        $stmt->execute();
-    }
-
-
     public function getAllTutorings(): array
     {
         $stmt = $this->database->connect()->prepare('
@@ -146,15 +132,9 @@ class TutoringRepository extends Repository
             );
     
             $tutoring->setId($tutoringData['tutoring_id']);
-    
-            $participants = $this->getTutoringParticipants($tutoringData['tutoring_id']);
-            foreach ($participants as $participant) {
-                $tutoring->addParticipant($participant);
-            }
-    
             $tutorings[] = $tutoring;
         }
-    
+
         return $tutorings;
     }
 
@@ -195,5 +175,28 @@ class TutoringRepository extends Repository
     
         return $tutorings;
     }
+
+    
+    public function filterAssignedTutorings($allTutorings, $userAssignedTutorings)
+    {
+    $filteredTutorings = [];
+
+    foreach ($allTutorings as $tutoring) {
+        $isAssigned = false;
+
+        foreach ($userAssignedTutorings as $assignedTutoring) {
+            if ($tutoring->getId() === $assignedTutoring->getId()) {
+                $isAssigned = true;
+                break;
+            }
+        }
+
+        if (!$isAssigned) {
+            $filteredTutorings[] = $tutoring;
+        }
+    }
+
+    return $filteredTutorings;
+}
 
 }

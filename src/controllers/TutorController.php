@@ -3,7 +3,7 @@ require_once 'AppController.php';
 require_once __DIR__ . '/../repository/UserRepository.php';
 require_once __DIR__ . '/../repository/SubjectRepository.php';
 require_once __DIR__ . '/../repository/TutoringRepository.php';
-
+require_once __DIR__ . '/../repository/ParticipantsRepository.php';
 
 class TutorController extends AppController
 {
@@ -11,6 +11,7 @@ class TutorController extends AppController
     private $subjectRepository;
     private $tutoringRepository;
     private $userCredentialsRepository;
+    private $participantsRepository;
 
 
     public function __construct()
@@ -20,6 +21,8 @@ class TutorController extends AppController
         $this->subjectRepository = SubjectRepository::getInstance();
         $this->tutoringRepository = TutoringRepository::getInstance();
         $this->userCredentialsRepository = UserCredentialsRepository::getInstance();
+        $this->userCredentialsRepository = UserCredentialsRepository::getInstance();
+        $this->participantsRepository = ParticipantsRepository::getInstance();
     }
 
 
@@ -27,15 +30,17 @@ class TutorController extends AppController
     {
         $this->checkAuthentication();
         $this->checkUserCredentials();
-        
+    
         if ($this->isGet()) {
             $allTutorings = $this->tutoringRepository->getAllTutorings();
             $userId = $_SESSION['user_id'];
             $userTutorings = $this->tutoringRepository->getTutoringsByUserId($userId);
-            $userAssignedTutorings = $userTutorings;
+    
+            $filteredAllTutorings = $this->tutoringRepository->filterAssignedTutorings($allTutorings, $userTutorings);
+    
             $this->render('dashboard', [
-                'allTutorings' => $allTutorings,
-                'userAssignedTutorings' => $userAssignedTutorings,
+                'allTutorings' => $filteredAllTutorings,
+                'userAssignedTutorings' => $userTutorings,
             ]);
         } else {
             throw new Exception("405");
@@ -48,7 +53,7 @@ class TutorController extends AppController
         $this->checkUserCredentials();
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $user = $this->userRepository->getUserById($userId);
-    
+
         if ($this->isGet()) {
             if ($userId !== null) {
                 if ($user !== null) {
@@ -63,16 +68,16 @@ class TutorController extends AppController
             if (isset($_POST['email']) && isset($_POST['city'])) {
                 $email = $_POST['email'];
                 $city = $_POST['city'];
-                $userCredentials = $user->getUserCredentials();         
+                $userCredentials = $user->getUserCredentials();
                 if (!empty($email)) {
                     $user->setEmail($email);
                 }
                 if (!empty($city)) {
                     $userCredentials->setCity($city);
-                }            
+                }
                 $user->setId($userId);
                 $this->userCredentialsRepository->updateUserCredentials($user, $userCredentials);
-    
+
                 header('Location: /profile');
                 exit();
             }
@@ -85,7 +90,7 @@ class TutorController extends AppController
     {
         $this->checkAuthentication();
         $this->checkUserCredentials();
-    
+
         if ($this->isGet()) {
             $subjects = $this->subjectRepository->getAllSubjects();
             $this->render('tutoring', ['subjects' => $subjects]);
@@ -95,15 +100,15 @@ class TutorController extends AppController
             $description = $_POST['description'] ?? '';
             $duration = $_POST['duration'] ?? '';
             $creatorId = $_SESSION['user_id'];
-    
+
             $creator = $this->userRepository->getUserById($creatorId);
             $creator->setId($creatorId);
             $subject = new Subject($_POST['subject']);
-    
+
             if ($creator === null || $subject === null) {
                 return;
             }
-    
+
             $tutoring = new Tutoring($subject, $date, $duration, $price, $creator, $description);
             $this->tutoringRepository->saveTutoring($tutoring);
             header('Location: /dashboard');
@@ -112,6 +117,59 @@ class TutorController extends AppController
             throw new Exception("405");
         }
     }
+
+    public function add_participation()
+    {
+        header('Content-Type: application/json');
+
+        if ($this->isPost()) {
+            $data = json_decode(file_get_contents("php://input"));
+
+            if (isset($data->tutoringId)) {
+                $userId = $_SESSION['user_id'];
+                $tutoringId = $data->tutoringId;
+
+                $success = $this->participantsRepository->saveParticipation($userId, $tutoringId);
+
+                if ($success) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Failed to save participation']);
+                }
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Invalid request']);
+            }
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Invalid request method']);
+        }
+    }
+
+    public function delete_participation()
+    {
+        header('Content-Type: application/json');
+
+        if ($this->isPost()) {
+            $data = json_decode(file_get_contents("php://input"));
+
+            if (isset($data->tutoringId)) {
+                $tutoringId = $data->tutoringId;
+                $success = $this->participantsRepository->deleteParticipation($tutoringId);
+
+                if ($success) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Failed to remove participation']);
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Invalid request']);
+            }
+        } else {
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Invalid request method']);
+        }
+    }
+
 
     private function checkAuthentication()
     {

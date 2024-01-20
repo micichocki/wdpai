@@ -13,6 +13,9 @@ Router::get('user_credentials', 'SecurityController');
 Router::get('dashboard', 'TutorController');
 Router::get('profile', 'TutorController');
 Router::get('tutoring', 'TutorController');
+Router::get('add_participation', 'TutorController');
+Router::get('delete_participation', 'TutorController');
+Router::get('admin_panel', 'AdminController');
 
 
 Router::run($path);

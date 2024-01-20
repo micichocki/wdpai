@@ -145,6 +145,29 @@ h4:hover{
     padding-left: 0.2rem;
 }
 
+.remove-button{
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  background: #F2F2F2;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  border-radius:0.4rem;
+  background: var(--interactive-primary-enabled, #7949FF);
+  color: var(--text-light, #FFF);
+  font-family: Jomhuria;
+  font-size: 2.8rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  align-self: end;
+  border:none;
+  margin-bottom: 2.2rem;
+}
+
 .available-appointments{
     min-width: 550px;
     max-width:47rem;
@@ -157,10 +180,10 @@ h4:hover{
     margin:3rem auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items:center;
     flex-wrap: wrap;
-    margin-bottom: 3rem;
-}
+    gap:3rem;
+  }
 
 .search-bar{
     margin-top:1rem;
@@ -216,21 +239,8 @@ h4:hover{
     display: flex;
     justify-content: c
   }
-  .rating{
-    display: flex;
-    flex-direction: row;
-  }
-  .star{
-    margin-top:1rem;
-    margin-left:1rem;
-  }
-  .rating-num{
-    font-family: "Jomhuria", sans-serif;
-    font-size: 2rem;
-    margin-top:1.4rem;
-    margin-left:0.2rem;
-    margin-bottom: 0;
-  }
+
+
   .localization{
     display: flex;
     flex-direction: row;
@@ -339,7 +349,9 @@ h4:hover{
     margin-left:2.4rem;
     border:none;
   }
-
+#user-id{
+  display: none;
+}
  
  @media(max-width:768px){
 
