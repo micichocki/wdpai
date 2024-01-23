@@ -35,7 +35,6 @@ class AdminController extends AppController
             if (isset($data->userId)) {
                 $userId = $data->userId;
                 $success = $this->userRepository->deleteUser($userId);
-    
                 if ($success) {
                     echo json_encode(['success' => true]);
                 } else {

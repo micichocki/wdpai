@@ -126,34 +126,35 @@ class UserRepository extends Repository
         return (bool)$result;
     }
 
-    public function deleteUser(int $userId): bool
+    public function deleteUser(int $userId)
     {
+
         $stmt = $this->database->connect()->prepare('
-            DELETE FROM public.users WHERE user_id = :user_id
-        ');
+                DELETE FROM public.users WHERE user_id = :user_id
+            ');
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $success = $stmt->execute();
-    
+
         if ($success) {
             $stmt = $this->database->connect()->prepare('
-                DELETE FROM public.tutorings WHERE user_id = :user_id
+                DELETE FROM public.tutoring WHERE creator_id = :user_id
             ');
             $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $stmt->execute();
-    
-            $stmt = $this->database->connect()->prepare('
-                DELETE FROM public.participants WHERE user_id = :user_id
-            ');
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $stmt->execute();
-    
-            $stmt = $this->database->connect()->prepare('
-                DELETE FROM public.usercredentials WHERE user_id = :user_id
-            ');
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $stmt->execute();
+            
+            if ($this->userHasTutorings($userId)) {
+                $stmt->execute();
+            }
         }
-    
+
         return $success;
+    }  
+        private function userHasTutorings($userId): bool {
+            $stmt = $this->database->connect()->prepare('
+                SELECT 1 FROM public.tutoring WHERE creator_id = :user_id LIMIT 1
+            ');
+            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+        
+            return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
+        }
     }
-}

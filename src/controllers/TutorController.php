@@ -181,7 +181,14 @@ class TutorController extends AppController
     private function checkUserCredentials()
     {
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-        $user = $this->userRepository->getUserById($userId);
+        try{
+            $user = $this->userRepository->getUserById($userId);
+        }catch (Exception $e) {
+            session_destroy();
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/register");
+        }
+        
         if (!$user->getUserCredentials()) {
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/user_credentials");
