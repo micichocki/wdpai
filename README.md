@@ -4,27 +4,51 @@
 
 Aplikacja do zapisywania się na korepetycje to narzędzie, które umożliwia użytkownikom łatwe i wygodne rejestracje na prywatne lekcje. Aplikacja ma na celu ułatwienie procesu zarówno dla uczniów, jak i nauczycieli, zapewniając przejrzysty sposób umawiania się na korepetycje.
 
-### Korzystanie z Aplikacji
+### Funkcje Aplikacji
 
-#### Rejestracja Ucznia:
+- **Rejestracja Użytkownika:**
+  1. Utwórz, podając swoje dane kontaktowe.
+  2. Hashowanie danych Bcrypt
+          ### Panel Rejestracji
+      ![Panel Rejestracji](./readme_images/registration.png)
 
-1. Utwórz konto ucznia, podając swoje dane kontaktowe.
-2. Wybierz przedmioty i terminy, w których chcesz korzystać z korepetycji.
-3. Zapisz swoje preferencje.
+- **Umawianie się na Korepetycje:**
+  1. Uczniowie mogą przeglądać dostępnych nauczycieli i terminy.
+  2. Wybierz nauczyciela i termin, który ci odpowiada.
+  3. Potwierdź rezerwację.
+     ### Panel Umawiania się na korepetycje
+      ![Główny panel](./readme_images/applying_for_tutorings.png)
 
-#### Rejestracja Nauczyciela:
+  - **Panel tworzenie korepetycji:**
+    1. Szybko i wygodnie twórz nowe korepetycje dla swoich uczniów.
+       ### Panel tworzenia korepetycji
+      ![Panel tworzenia korepetycji](./readme_images/adding_tutorings.png)
 
-1. Utwórz konto nauczyciela, podając swoje kwalifikacje i dostępność.
-2. Zdefiniuj przedmioty, w których jesteś w stanie udzielać korepetycji.
-3. Zatwierdź dostępność.
+- **Kalendarz i Powiadomienia:**
+  - Użytkownicy mogą śledzić swoje korepetycje w kalendarzu.
+  - Otrzymuj powiadomienia o nadchodzących lekcjach.
 
-#### Umawianie się na Korepetycje:
+- **Edycja Danych Użytkownika:**
+  - Użytkownicy mogą edytować swoje dane, dostosowując je do bieżących potrzeb.
+     ### Edycja Danych Osobistych
+      ![Panel Profilu](./readme_images/profile_customization.png)
 
-1. Uczniowie mogą przeglądać dostępnych nauczycieli i terminy.
-2. Wybierz nauczyciela i termin, który ci odpowiada.
-3. Potwierdź rezerwację.
+- **Panel Administracyjny:**
+  - Istnieje panel administracyjny umożliwiający zarządzanie użytkownikami, korepetycjami i innymi aspektami aplikacji.
+    ### Panel Administracyjny
+      ![Panel Administracyjny](./readme_images/deletion_panel.png)
 
-#### Kalendarz i Powiadomienia:
+## Diagramy ERD
 
-- Zarówno uczniowie, jak i nauczyciele mogą śledzić swoje korepetycje w kalendarzu.
-- Otrzymuj powiadomienia o nadchodzących lekcjach.
+### Ogólny Diagram ERD
+![Diagram ERD](./readme_images/erd.png)
+
+### Diagramy Relacji
+- **Many-to-Many:**
+  ![Many-to-Many](./readme_images/many_to_many.png)
+
+- **Many-to-One:**
+  ![Many-to-One](./readme_images/many_to_one.png)
+
+- **One-to-One:**
+  ![One-to-One](./readme_images/one_to_one.png)
