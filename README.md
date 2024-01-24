@@ -9,7 +9,7 @@ Aplikacja do zapisywania się na korepetycje to narzędzie, które umożliwia u�
 - **Rejestracja Użytkownika:**
   1. Utwórz, podając swoje dane kontaktowe.
   2. Hashowanie danych Bcrypt
-          ### Panel Rejestracji
+     ### Panel Rejestracji
       ![Panel Rejestracji](./readme_images/registration.png)
 
 - **Umawianie się na Korepetycje:**
