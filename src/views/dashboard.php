@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/public/css/global.css">
   <link rel="stylesheet" href="/public/css/dashboard.css">
-  <script src="../../public/js/dashboard.js"></script>
 </head>
 
 <body>
@@ -55,15 +54,6 @@
   </nav>
 
   <main>
-    <div class="messages">
-      <?php
-      if (isset($messages)) {
-        foreach ($messages as $message) {
-          echo $message;
-        }
-      }
-      ?>
-    </div>
     <h1 class='appointment-label'>Booked tutorings</h1>
     <div class='appointments-container'>
       <?php if (empty($userAssignedTutorings)) : ?>
@@ -94,6 +84,15 @@
       <?php endif; ?>
     </div>
     <h1 class='appointment-label'>Available tutorings</h1>
+    <div class="messages">
+      <?php
+      if (isset($messages)) {
+        foreach ($messages as $message) {
+          echo $message;
+        }
+      }
+      ?>
+    </div>
     <div class="available-appointments">
       <form action="#">
         <div class="custom-input">
@@ -130,10 +129,8 @@
 
               </div>
             <?php endif; ?>
-            <div class="apply">
-
-
-              <button id="submit-button" class="apply-button" data-tutoring-id="<?= $userTutoring->getId(); ?>" data-creator-id="<?= $userTutoring->getCreator()->getId(); ?>">
+            <div class="apply" #='apply-container'>
+              <button class="apply-button" data-tutoring-id="<?= $userTutoring->getId(); ?>" data-creator-id="<?= $userTutoring->getCreator()->getId(); ?>">
                 Apply
               </button>
             </div>
@@ -153,7 +150,7 @@
     </div>
 
   </main>
-
+  <script src="../../public/js/dashboard.js"></script>
 </body>
 
 </html>

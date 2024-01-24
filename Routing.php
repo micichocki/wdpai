@@ -25,7 +25,7 @@ class Router
 
   public static function run($url)
   {
-    // try {
+    try {
 
     session_start();
     $action = explode("/", $url)[0];
@@ -38,17 +38,15 @@ class Router
     $object = new $controller;
     $action = $action ?: 'index';
     $object->$action();
-  //   } catch (Exception $e) {
-  //     $errorController = new ErrorController();
-  //     session_destroy(); 
-  //     if ($e->getMessage() === "404") { 
-  //       $errorController->error404();
-  //     } else if ($e->getMessage() === "401") {
-  //       $errorController->error401();
-  //     } else {
-  //       $errorController->error();
-  //     }
-  //   }
-
+    } catch (Exception $e) {
+      $errorController = new ErrorController();
+      if ($e->getMessage() === "404") { 
+        $errorController->error404();
+      } else if ($e->getMessage() === "401") {
+        $errorController->error401();
+      } else {
+        $errorController->error();
+      }
+    }
 }
 }

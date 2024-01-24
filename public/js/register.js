@@ -8,7 +8,6 @@ retypePasswordInput.addEventListener('keyup', validatePasswords);
 
 function markValidation(element, condition) {
   !condition ? element.classList.add('no-valid') : element.classList.remove('no-valid');
-  console.log(!condition)
 }
 
 function validateEmail() {

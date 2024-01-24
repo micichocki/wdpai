@@ -70,7 +70,6 @@ class TutorController extends AppController
                 $city = $_POST['city'];
                 $userCredentials = $user->getUserCredentials();
                 
-                // Check if city contains only letters
                 if (!preg_match('/^[A-Za-z]+$/', $city)) {
                     return $this->render('profile', ['messages' => ['Invalid city format. Use only letters.'], 'user' => $user]);
                 }

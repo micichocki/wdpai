@@ -10,12 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const tutoringId = button.getAttribute('data-tutoring-id');
       const creatorId = button.getAttribute('data-creator-id');
-      console.log('userId:', userId);
-      console.log('creatorId:', creatorId);
 
       if (userId === creatorId) {
         const messagesContainer = document.querySelector('.messages');
         messagesContainer.innerHTML = '<div class="message">You cannot apply to your own tutoring.</div>';
+        button.id='non-valid-button';
         return;
       }
 
@@ -58,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
           if (data.success) {
             window.location.reload();
           }
