@@ -1,18 +1,28 @@
 <?php
+
 require_once "config.php";
 
 class Database {
+    private static $instance;
     private $username;
     private $password;
     private $host;
     private $database;
 
-    public function __construct()
+    private function __construct()
     {
         $this->username = USERNAME;
         $this->password = PASSWORD;
         $this->host = HOST;
         $this->database = DATABASE;
+    }
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function connect()
@@ -27,8 +37,7 @@ class Database {
 
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $conn;
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
     }
