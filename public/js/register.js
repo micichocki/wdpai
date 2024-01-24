@@ -1,26 +1,40 @@
-function validateForm() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const retypePassword = document.getElementById('retype-password').value;
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const retypePasswordInput = document.getElementById('retype-password');
+const messagesContainer = document.querySelector('.messages');
+
+emailInput.addEventListener('keyup', validateEmail);
+retypePasswordInput.addEventListener('keyup', validatePasswords);
+
+function markValidation(element, condition) {
+  !condition ? element.classList.add('no-valid') : element.classList.remove('no-valid');
+  console.log(!condition)
+}
+
+function validateEmail() {
+  setTimeout(function () {
+  const email = emailInput.value;
+  markValidation(emailInput, isCorrectEmail(email));
+    },
+  1000
+);
+}
   
-    if (!validateEmail(email)) {
-      alert('Invalid email address');
-      return false;
-    }
+function isCorrectEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
   
-    if (!validatePassword(password, retypePassword)) {
-      alert('Passwords do not match or are not secure');
-      return false;
-    }
+function validatePasswords() {
+  setTimeout(function () {
+  const password = passwordInput.value;
+  const retypePassword = retypePasswordInput.value;
+  markValidation(retypePasswordInput, isCorrectPassword(password, retypePassword));
+    },
+  1000
+  );
+} 
   
-    return true;
-  }
-  
-  function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-  
-  function validatePassword(password, retypePassword) {
-    return password.length >= 8 && password === retypePassword;
-  }
+function isCorrectPassword(password, retypePassword) {
+  return password.length >= 4 && password === retypePassword;
+}

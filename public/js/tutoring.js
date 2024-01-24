@@ -1,59 +1,62 @@
-function validateForm() {
-    const subject = document.getElementById('subject');
-    const date = document.getElementById('date');
-    const duration = document.getElementById('duration');
-    const price = document.getElementById('price');
-    const description = document.getElementById('description');
+const date = document.getElementById('date');
+const duration = document.getElementById('duration');
+const price = document.getElementById('price');
+const description = document.getElementById('description');
 
-    const messagesContainer = document.querySelector('.messages');
-    messagesContainer.innerHTML = ''; 
 
-    if (!subject.value.trim()) {
-        displayMessage('Please select a subject.');
-        return false;
-    }
+date.addEventListener('input', validateDate);
+duration.addEventListener('input', validateDuration);
+price.addEventListener('input', validatePrice);
+description.addEventListener('input', validateDescription);
 
-    if (!date.value.trim()) {
-        displayMessage('Please enter a date and time.');
-        return false;
-    }
 
-    if (!isValidDateFormat(date.value.trim())) {
-        displayMessage('Invalid date and time format. Please use dd:mm:yyyy HH:mm.');
-        return false;
-    }
+function markValidation(element, condition) {
+    condition ? element.classList.remove('no-valid') : element.classList.add('no-valid');
+}
 
-    if (!duration.value.trim()) {
-        displayMessage('Please enter a duration.');
-        return false;
-    }
+function validateDate() {
+    setTimeout(function () {
+    const dateValue = date.value.trim();
+    const isValidFormat = isValidDateFormat(dateValue);
+    markValidation(date, isValidFormat);
+    return isValidFormat;
+        },
+    1000
+);
+}
 
-    if (!isValidDuration(duration.value.trim())) {
-        displayMessage('Invalid duration format. Please use HH:mm.');
-        return false;
-    }
+function validateDuration() {
+    setTimeout(function () {
+    const durationValue = duration.value.trim();
+    const isValid = isValidDuration(durationValue);
+    markValidation(duration, isValid);
+    return isValid;
+        },
+    1000
+);
+}
 
-    if (!price.value.trim()) {
-        displayMessage('Please enter a price.');
-        return false;
-    }
+function validatePrice() {
+    setTimeout(function () {
+    const priceValue = parseFloat(price.value.trim());
+    console.log(priceValue)
+    const isValid = !isNaN(priceValue) && priceValue >= 0 && priceValue <= 1000;
+    markValidation(price, isValid, 'Invalid price. Enter a value between 0 and 1000');
+    return isValid;
+        },
+    1000
+);
+}
 
-    if (parseFloat(price.value.trim()) < 0) {
-        displayMessage('Price cannot be negative.');
-        return false;
-    }
-
-    if (!description.value.trim()) {
-        displayMessage('Please enter a description.');
-        return false;
-    }
-
-    if (description.value.trim().length < 20) {
-        displayMessage('Description must have at least 20 characters.');
-        return false;
-    }
-
-    return true;
+function validateDescription() {
+    setTimeout(function () {
+    const descriptionValue = description.value.trim();
+    const isValid = descriptionValue.length >= 10;
+    markValidation(description, isValid);
+    return isValid;
+        },
+    1000
+);
 }
 
 function isValidDateFormat(dateTime) {
@@ -66,10 +69,3 @@ function isValidDuration(duration) {
     return durationRegex.test(duration);
 }
 
-function displayMessage(message) {
-    const messagesContainer = document.querySelector('.messages');
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.textContent = message;
-    messagesContainer.appendChild(messageElement);
-}

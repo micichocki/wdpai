@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
-    <script src="../../public/js/user_credentials.js"></script>
 </head>
 
 <body>
@@ -31,7 +30,13 @@
     </nav>
 
     <main>
-
+        <div class="settings-nav">
+            <ul class="settings-buttons">
+                <li><a href="">Personal Info</a></li>
+                <li><a href="">Settings</a></li>
+            </ul>
+        </div>
+        <div class="personal-info-container">
         <div class="messages">
             <?php
             if (isset($messages)) {
@@ -41,13 +46,6 @@
             }
             ?>
         </div>
-        <div class="settings-nav">
-            <ul class="settings-buttons">
-                <li><a href="">Personal Info</a></li>
-                <li><a href="">Settings</a></li>
-            </ul>
-        </div>
-        <div class="personal-info-container">
             <div class="welcome-text-container">
                 <h1 class="welcome-text">Please provide your credentials</h1>
             </div>
@@ -68,7 +66,7 @@
         </div>
 
     </main>
-
+    <script src="../../public/js/user_credentials.js"></script>
 </body>
 
 </html>

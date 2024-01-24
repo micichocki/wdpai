@@ -53,7 +53,7 @@ class TutorController extends AppController
         $this->checkUserCredentials();
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $user = $this->userRepository->getUserById($userId);
-
+    
         if ($this->isGet()) {
             if ($userId !== null) {
                 if ($user !== null) {
@@ -69,15 +69,27 @@ class TutorController extends AppController
                 $email = $_POST['email'];
                 $city = $_POST['city'];
                 $userCredentials = $user->getUserCredentials();
-                if (!empty($email)) {
-                    $user->setEmail($email);
+                
+                // Check if city contains only letters
+                if (!preg_match('/^[A-Za-z]+$/', $city)) {
+                    return $this->render('profile', ['messages' => ['Invalid city format. Use only letters.'], 'user' => $user]);
                 }
+    
                 if (!empty($city)) {
                     $userCredentials->setCity($city);
                 }
+    
+                if (!empty($email)) {
+                    $user->setEmail($email);
+                }
+    
                 $user->setId($userId);
                 $this->userCredentialsRepository->updateUserCredentials($user, $userCredentials);
-
+    
+                if (strlen($email) <= 4) {
+                    return $this->render('profile', ['messages' => ['Email is too short.'], 'user' => $user]);
+                }
+    
                 header('Location: /profile');
                 exit();
             }
@@ -85,14 +97,12 @@ class TutorController extends AppController
             throw new Exception("405");
         }
     }
-
     public function tutoring()
     {
         $this->checkAuthentication();
         $this->checkUserCredentials();
-
-        if ($this->isGet()) {
-            $subjects = $this->subjectRepository->getAllSubjects();
+        $subjects = $this->subjectRepository->getAllSubjects();
+        if ($this->isGet()) {  
             $this->render('tutoring', ['subjects' => $subjects]);
         } elseif ($this->isPost()) {
             $date = $_POST['date'] ?? '';
@@ -100,15 +110,45 @@ class TutorController extends AppController
             $description = $_POST['description'] ?? '';
             $duration = $_POST['duration'] ?? '';
             $creatorId = $_SESSION['user_id'];
-
+    
             $creator = $this->userRepository->getUserById($creatorId);
             $creator->setId($creatorId);
             $subject = new Subject($_POST['subject']);
-
+    
             if ($creator === null || $subject === null) {
-                return;
+                throw new Exception("403");
             }
-
+    
+            $currentTimestamp = time();
+            $inputTimestamp = strtotime($date);
+    
+            if ($inputTimestamp < $currentTimestamp) {
+                return $this->render('tutoring', ['messages' => ['Wrong date provided'],'subjects' => $subjects]);
+            }
+    
+            $currentYear = date('Y');
+            $inputYear = date('Y', $inputTimestamp);
+    
+            if ($inputYear > $currentYear + 2) {
+                return $this->render('tutoring', ['messages' => ['Wrong date provided'],'subjects' => $subjects]);
+            }
+    
+            if ($price > 1000 || $price <= 0) {
+                return $this->render('tutoring', ['messages' => ['Wrong price provided'],'subjects' => $subjects]);
+            }
+    
+            if (!preg_match('/^\d+:\d{2}$/', $duration)) {
+                return $this->render('tutoring', ['messages' => ['Wrong date provided'],'subjects' => $subjects]);
+            }
+    
+            if (preg_match('/\b(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE)\b/i', $description)) {
+                return $this->render('tutoring', ['messages' => ['Invalid description'],'subjects' => $subjects]);
+            }
+    
+            if (strlen($description) < 10) {
+                return $this->render('tutoring', ['messages' => ['Description too short'],'subjects' => $subjects]);
+            }
+    
             $tutoring = new Tutoring($subject, $date, $duration, $price, $creator, $description);
             $this->tutoringRepository->saveTutoring($tutoring);
             header('Location: /dashboard');
@@ -117,6 +157,7 @@ class TutorController extends AppController
             throw new Exception("405");
         }
     }
+    
 
     public function add_participation()
     {

@@ -75,6 +75,15 @@
             </ul>
         </div>
         <div class="personal-info-container">
+
+            <?php
+            if (isset($messages)) {
+                foreach ($messages as $message) {
+                    echo $message;
+                }
+            }
+            ?>
+
             <form class="personal-info-form" action="#" method="POST">
                 <label for="email">Email</label>
                 <input id="email" type="email" name="email" placeholder="<?= $user->getEmail() ?>">
@@ -83,7 +92,7 @@
                 <?php if ($user->getUserCredentials()->getCity() !== null) : ?>
                     <input id="city" type="text" name="city" maxlength="125" placeholder="<?= $user->getUserCredentials()->getCity() ?>">
                 <?php else : ?>
-                    <input id="text" type="text" name="city" maxlength="125">
+                    <input id="city" type="text" name="city" maxlength="125">
                 <?php endif; ?>
 
                 <button type="submit">Confirm</button>
@@ -91,7 +100,7 @@
         </div>
 
     </main>
-
+    <script src="../../public/js/profile.js"></script>
 </body>
 
 </html>

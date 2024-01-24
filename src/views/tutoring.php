@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/global.css">
     <link rel="stylesheet" href="/public/css/tutoring.css">
-    <script src="../../public/js/tutoring.js"></script>
 </head>
 
 <body>
@@ -79,7 +78,7 @@
                 <input id="date" type="datetime-local" name="date" required>
 
                 <label for="duration">Duration</label>
-                <input id="duration" type="text" name="duration" placeholder="(HH:mm)" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
+                <input id="duration" type="text" name="duration" placeholder="HH:mm" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" required>
 
                 <label for="price">Price</label>
                 <input id="price" type="number" name="price" placeholder="(PLN)" min="0" required>
@@ -91,7 +90,7 @@
             </form>
         </div>
     </main>
-
+    <script src="../../public/js/tutoring.js"></script>
 </body>
 
 </html>

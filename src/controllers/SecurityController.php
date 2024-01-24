@@ -61,6 +61,10 @@ class SecurityController extends AppController
         $email = $_POST['email'];
         $password = $_POST['password'];
         $retype_password = $_POST['retype-password'];
+
+        if (strlen($email) < 4) {
+            return $this->render('register', ['messages' => ['Email is too short.']]);
+        }
     
         if (strlen($password) < 4) {
             return $this->render('register', ['messages' => ['Password is too short.']]);
@@ -102,27 +106,30 @@ class SecurityController extends AppController
         $this->isSessionCorrect();
         $userId = $_SESSION['user_id'];
         $user = $this->userRepository->getUserById($userId);
-        if($this->isGet()){
+    
+        if ($this->isGet()) {
             if ($user->getUserCredentials()) {
                 $url = "http://$_SERVER[HTTP_HOST]";
                 header("Location: {$url}/dashboard");
                 exit();
             }
             return $this->render('user_credentials');
-        }
-        else if($this->isPost()){
-        $name = $_POST['name'];
-        $surname = $_POST['surname'];
-        $city = $_POST['city'];
-
-        $newUserCredential = new UserCredentials($name,$surname,$city);
-        $this->userCredentialsRepository->addUserCredentials($userId,$newUserCredential);
-
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/dashboard");
-        exit();
-
-        }else{
+        } else if ($this->isPost()) {
+            $name = $_POST['name'];
+            $surname = $_POST['surname'];
+            $city = $_POST['city'];
+    
+            if (strlen($name) >= 2 && strlen($name) <= 20 && strlen($surname) >= 2 && strlen($surname) <= 20) {    
+                $newUserCredential = new UserCredentials($name, $surname, $city);
+                $this->userCredentialsRepository->addUserCredentials($userId, $newUserCredential);
+    
+                $url = "http://$_SERVER[HTTP_HOST]";
+                header("Location: {$url}/dashboard");
+                exit();
+            } else {
+                return $this->render('user_credentials', ['messages' => ["Invalid name or surname length. "]]);
+            }
+        } else {
             throw new Exception("405");
         }
     }

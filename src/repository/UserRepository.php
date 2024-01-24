@@ -128,33 +128,37 @@ class UserRepository extends Repository
 
     public function deleteUser(int $userId)
     {
+        $database = $this->database->connect();
+        $database->beginTransaction();
 
-        $stmt = $this->database->connect()->prepare('
-                DELETE FROM public.users WHERE user_id = :user_id
-            ');
-        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-        $success = $stmt->execute();
-
-        if ($success) {
-            $stmt = $this->database->connect()->prepare('
-                DELETE FROM public.tutoring WHERE creator_id = :user_id
-            ');
+        try {
+            $stmt = $database->prepare('DELETE FROM public.users WHERE user_id = :user_id');
             $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            
-            if ($this->userHasTutorings($userId)) {
-                $stmt->execute();
+            $success = $stmt->execute();
+
+            if ($success) {
+                $stmt = $database->prepare('DELETE FROM public.tutoring WHERE creator_id = :user_id');
+                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+
+                if ($this->userHasTutorings($userId)) {
+                    $stmt->execute();
+                }
             }
-        }
 
-        return $success;
-    }  
-        private function userHasTutorings($userId): bool {
-            $stmt = $this->database->connect()->prepare('
-                SELECT 1 FROM public.tutoring WHERE creator_id = :user_id LIMIT 1
-            ');
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $stmt->execute();
-        
-            return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
+            $database->commit();
+            return $success;
+        } catch (Exception $e) {
+            $database->rollBack();
+            throw $e;
         }
     }
+
+    private function userHasTutorings($userId): bool
+    {
+        $stmt = $this->database->connect()->prepare('SELECT 1 FROM public.tutoring WHERE creator_id = :user_id LIMIT 1');
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
+    }
+}
