@@ -130,21 +130,32 @@ class UserRepository extends Repository
     {
         $database = $this->database->connect();
         $database->beginTransaction();
-
+    
         try {
-            $stmt = $database->prepare('DELETE FROM public.users WHERE user_id = :user_id');
-            $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-            $success = $stmt->execute();
+            $stmtFindCredentialsId = $database->prepare('SELECT user_credentials_id FROM public.users WHERE user_id = :user_id');
+            $stmtFindCredentialsId->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $stmtFindCredentialsId->execute();
+            $userCredentialsId = $stmtFindCredentialsId->fetchColumn();
+
+            $stmtDeleteUser = $database->prepare('DELETE FROM public.users WHERE user_id = :user_id');
+            $stmtDeleteUser->bindParam(':user_id', $userId, PDO::PARAM_INT);
+            $success = $stmtDeleteUser->execute();
+    
+    
+            $stmtDeleteCredentials = $database->prepare('DELETE FROM public.usercredentials WHERE user_credentials_id = :user_credentials_id');
+            $stmtDeleteCredentials->bindParam(':user_credentials_id', $userCredentialsId, PDO::PARAM_INT);
+            $stmtDeleteCredentials->execute();
+    
 
             if ($success) {
-                $stmt = $database->prepare('DELETE FROM public.tutoring WHERE creator_id = :user_id');
-                $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-
+                $stmtDeleteTutoring = $database->prepare('DELETE FROM public.tutoring WHERE creator_id = :user_id');
+                $stmtDeleteTutoring->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    
                 if ($this->userHasTutorings($userId)) {
-                    $stmt->execute();
+                    $stmtDeleteTutoring->execute();
                 }
             }
-
+    
             $database->commit();
             return $success;
         } catch (Exception $e) {

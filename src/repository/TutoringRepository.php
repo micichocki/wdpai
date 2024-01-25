@@ -111,11 +111,15 @@ class TutoringRepository extends Repository
 
     public function getAllTutorings(): array
     {
+        $currentDate = date('Y-m-d H:i:s'); 
+    
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM tutoring
             JOIN subjects ON tutoring.subject_id = subjects.subject_id
+            WHERE tutoring.date >= :current_date
         ');
     
+        $stmt->bindParam(':current_date', $currentDate, PDO::PARAM_STR);
         $stmt->execute();
     
         $tutorings = [];
@@ -135,9 +139,10 @@ class TutoringRepository extends Repository
             $tutoring->setId($tutoringData['tutoring_id']);
             $tutorings[] = $tutoring;
         }
-
+    
         return $tutorings;
     }
+    
 
     public function getTutoringsByUserId(int $userId): array
     {

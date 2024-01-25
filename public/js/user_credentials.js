@@ -12,6 +12,8 @@ function markValidation(element, condition) {
     if (!condition){
         messagesContainer.innerHTML = `Credentials must have between 2 and 20 characters`;
         messagesContainer.style.color='red';
+    }else{
+        messagesContainer.innerHTML = ``
     }
 }
 

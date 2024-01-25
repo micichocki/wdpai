@@ -77,7 +77,7 @@ class SecurityController extends AppController
         $allUsers = $this->userRepository->getAllUsers();
     
         foreach ($allUsers as $existingUser) {
-            if ($existingUser->getEmail() === $email || password_verify($password, $existingUser->getPassword())) {
+            if ($existingUser->getEmail() === $email) {
                 return $this->render('register', ['messages' => ['User Exists']]);
             }
         }
