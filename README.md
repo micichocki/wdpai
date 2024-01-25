@@ -50,5 +50,5 @@ Aplikacja do zapisywania się na korepetycje to narzędzie, które umożliwia u�
 - **One-to-Many:**
   ![Many-to-One](./readme_images/one_to_many.png)
 
-- **One-to-One:**
+- **One-to-One:**<br>
   ![One-to-One](./readme_images/one_to_one.png)
