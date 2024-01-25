@@ -75,15 +75,15 @@
             </ul>
         </div>
         <div class="personal-info-container">
-
-            <?php
-            if (isset($messages)) {
-                foreach ($messages as $message) {
-                    echo $message;
+            <div class='messages'>
+                <?php
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo $message;
+                    }
                 }
-            }
-            ?>
-
+                ?>
+            </div>
             <form class="personal-info-form" action="#" method="POST">
                 <label for="email">Email</label>
                 <input id="email" type="email" name="email" placeholder="<?= $user->getEmail() ?>">

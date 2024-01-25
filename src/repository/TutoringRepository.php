@@ -117,6 +117,7 @@ class TutoringRepository extends Repository
             SELECT * FROM tutoring
             JOIN subjects ON tutoring.subject_id = subjects.subject_id
             WHERE tutoring.date >= :current_date
+            ORDER BY tutoring.date
         ');
     
         $stmt->bindParam(':current_date', $currentDate, PDO::PARAM_STR);
@@ -142,7 +143,6 @@ class TutoringRepository extends Repository
     
         return $tutorings;
     }
-    
 
     public function getTutoringsByUserId(int $userId): array
     {

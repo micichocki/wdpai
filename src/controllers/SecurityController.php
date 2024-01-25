@@ -114,10 +114,14 @@ class SecurityController extends AppController
                 exit();
             }
             return $this->render('user_credentials');
-        } else if ($this->isPost()) {
+        } elseif ($this->isPost()) {
             $name = $_POST['name'];
             $surname = $_POST['surname'];
             $city = $_POST['city'];
+    
+            $name = ucfirst($name);
+            $surname = ucfirst($surname);
+            $city = ucfirst($city);
     
             if (strlen($name) >= 2 && strlen($name) <= 20 && strlen($surname) >= 2 && strlen($surname) <= 20) {    
                 $newUserCredential = new UserCredentials($name, $surname, $city);
@@ -127,7 +131,7 @@ class SecurityController extends AppController
                 header("Location: {$url}/dashboard");
                 exit();
             } else {
-                return $this->render('user_credentials', ['messages' => ["Invalid name or surname length. "]]);
+                return $this->render('user_credentials', ['messages' => ["Invalid name or surname length."]]);
             }
         } else {
             throw new Exception("405");

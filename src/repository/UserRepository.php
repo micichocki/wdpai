@@ -126,6 +126,8 @@ class UserRepository extends Repository
         return (bool)$result;
     }
 
+    
+
     public function deleteUser(int $userId)
     {
         $database = $this->database->connect();
@@ -148,6 +150,14 @@ class UserRepository extends Repository
     
 
             if ($success) {
+
+                $stmtDeleteTutoring = $database->prepare('DELETE FROM public.participants WHERE user_id = :user_id');
+                $stmtDeleteTutoring->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    
+                if ($this->userHasTutorings($userId)) {
+                    $stmtDeleteTutoring->execute();
+                }
+
                 $stmtDeleteTutoring = $database->prepare('DELETE FROM public.tutoring WHERE creator_id = :user_id');
                 $stmtDeleteTutoring->bindParam(':user_id', $userId, PDO::PARAM_INT);
     

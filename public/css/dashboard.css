@@ -118,7 +118,7 @@ messages:hover{
 }
 .subject{
     margin-top:1rem;
-    margin-left: 6rem;
+    margin-left: 2rem;
     height: 1.4rem;
     margin-bottom: 0;
     padding-right: 0.2rem;
@@ -301,6 +301,7 @@ h4:hover{
     margin-left:1rem;
     transition: background-color 0.3s ease;
     margin-bottom: 1.6rem;
+    text-align: center;
   }
   .appointment-subject:hover{
     background-color: #F2F2F2;
