@@ -5,7 +5,7 @@
 -- Dumped from database version 16.1 (Debian 16.1-1.pgdg120+1)
 -- Dumped by pg_dump version 16.1
 
--- Started on 2024-01-25 13:54:45 UTC
+-- Started on 2024-01-25 17:57:01 UTC
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,7 +29,7 @@ CREATE SCHEMA public;
 ALTER SCHEMA public OWNER TO pg_database_owner;
 
 --
--- TOC entry 3409 (class 0 OID 0)
+-- TOC entry 3419 (class 0 OID 0)
 -- Dependencies: 4
 -- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
 --
@@ -38,7 +38,7 @@ COMMENT ON SCHEMA public IS 'standard public schema';
 
 
 --
--- TOC entry 225 (class 1255 OID 41105)
+-- TOC entry 227 (class 1255 OID 41105)
 -- Name: set_date_of_join(); Type: FUNCTION; Schema: public; Owner: docker
 --
 
@@ -73,31 +73,6 @@ CREATE TABLE public.participants (
 ALTER TABLE public.participants OWNER TO docker;
 
 --
--- TOC entry 223 (class 1259 OID 41067)
--- Name: participants_participant_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
---
-
-CREATE SEQUENCE public.participants_participant_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.participants_participant_id_seq OWNER TO docker;
-
---
--- TOC entry 3410 (class 0 OID 0)
--- Dependencies: 223
--- Name: participants_participant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
---
-
-ALTER SEQUENCE public.participants_participant_id_seq OWNED BY public.participants.participant_id;
-
-
---
 -- TOC entry 216 (class 1259 OID 32793)
 -- Name: subjects; Type: TABLE; Schema: public; Owner: docker
 --
@@ -109,31 +84,6 @@ CREATE TABLE public.subjects (
 
 
 ALTER TABLE public.subjects OWNER TO docker;
-
---
--- TOC entry 215 (class 1259 OID 32792)
--- Name: subjects_subject_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
---
-
-CREATE SEQUENCE public.subjects_subject_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.subjects_subject_id_seq OWNER TO docker;
-
---
--- TOC entry 3411 (class 0 OID 0)
--- Dependencies: 215
--- Name: subjects_subject_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
---
-
-ALTER SEQUENCE public.subjects_subject_id_seq OWNED BY public.subjects.subject_id;
-
 
 --
 -- TOC entry 222 (class 1259 OID 41054)
@@ -154,31 +104,6 @@ CREATE TABLE public.tutoring (
 ALTER TABLE public.tutoring OWNER TO docker;
 
 --
--- TOC entry 221 (class 1259 OID 41053)
--- Name: tutoring_tutoring_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
---
-
-CREATE SEQUENCE public.tutoring_tutoring_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.tutoring_tutoring_id_seq OWNER TO docker;
-
---
--- TOC entry 3412 (class 0 OID 0)
--- Dependencies: 221
--- Name: tutoring_tutoring_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
---
-
-ALTER SEQUENCE public.tutoring_tutoring_id_seq OWNED BY public.tutoring.tutoring_id;
-
-
---
 -- TOC entry 218 (class 1259 OID 32873)
 -- Name: usercredentials; Type: TABLE; Schema: public; Owner: docker
 --
@@ -194,31 +119,6 @@ CREATE TABLE public.usercredentials (
 
 
 ALTER TABLE public.usercredentials OWNER TO docker;
-
---
--- TOC entry 217 (class 1259 OID 32872)
--- Name: usercredentials_user_credentials_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
---
-
-CREATE SEQUENCE public.usercredentials_user_credentials_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.usercredentials_user_credentials_id_seq OWNER TO docker;
-
---
--- TOC entry 3413 (class 0 OID 0)
--- Dependencies: 217
--- Name: usercredentials_user_credentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
---
-
-ALTER SEQUENCE public.usercredentials_user_credentials_id_seq OWNED BY public.usercredentials.user_credentials_id;
-
 
 --
 -- TOC entry 220 (class 1259 OID 32883)
@@ -237,6 +137,148 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO docker;
 
 --
+-- TOC entry 226 (class 1259 OID 41131)
+-- Name: participant_tutoring_info; Type: VIEW; Schema: public; Owner: docker
+--
+
+CREATE VIEW public.participant_tutoring_info AS
+ SELECT p.participant_id,
+    uc.name AS user_name,
+    uc.surname AS user_surname,
+    s.name AS subject_name,
+    t.date,
+    t.price,
+    t.description
+   FROM ((((public.participants p
+     JOIN public.users u ON ((p.user_id = u.user_id)))
+     JOIN public.usercredentials uc ON ((u.user_credentials_id = uc.user_credentials_id)))
+     JOIN public.tutoring t ON ((p.tutoring_id = t.tutoring_id)))
+     JOIN public.subjects s ON ((t.subject_id = s.subject_id)));
+
+
+ALTER VIEW public.participant_tutoring_info OWNER TO docker;
+
+--
+-- TOC entry 223 (class 1259 OID 41067)
+-- Name: participants_participant_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
+--
+
+CREATE SEQUENCE public.participants_participant_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.participants_participant_id_seq OWNER TO docker;
+
+--
+-- TOC entry 3420 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: participants_participant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
+--
+
+ALTER SEQUENCE public.participants_participant_id_seq OWNED BY public.participants.participant_id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 32792)
+-- Name: subjects_subject_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
+--
+
+CREATE SEQUENCE public.subjects_subject_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.subjects_subject_id_seq OWNER TO docker;
+
+--
+-- TOC entry 3421 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: subjects_subject_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
+--
+
+ALTER SEQUENCE public.subjects_subject_id_seq OWNED BY public.subjects.subject_id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 41053)
+-- Name: tutoring_tutoring_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
+--
+
+CREATE SEQUENCE public.tutoring_tutoring_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.tutoring_tutoring_id_seq OWNER TO docker;
+
+--
+-- TOC entry 3422 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: tutoring_tutoring_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
+--
+
+ALTER SEQUENCE public.tutoring_tutoring_id_seq OWNED BY public.tutoring.tutoring_id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 41122)
+-- Name: user_credentials_info; Type: VIEW; Schema: public; Owner: docker
+--
+
+CREATE VIEW public.user_credentials_info AS
+ SELECT u.user_id,
+    u.email,
+    uc.name,
+    uc.surname,
+    uc.address,
+    uc.date_of_join,
+    uc.city,
+    u.privileged
+   FROM (public.users u
+     JOIN public.usercredentials uc ON ((u.user_credentials_id = uc.user_credentials_id)));
+
+
+ALTER VIEW public.user_credentials_info OWNER TO docker;
+
+--
+-- TOC entry 217 (class 1259 OID 32872)
+-- Name: usercredentials_user_credentials_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
+--
+
+CREATE SEQUENCE public.usercredentials_user_credentials_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.usercredentials_user_credentials_id_seq OWNER TO docker;
+
+--
+-- TOC entry 3423 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: usercredentials_user_credentials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
+--
+
+ALTER SEQUENCE public.usercredentials_user_credentials_id_seq OWNED BY public.usercredentials.user_credentials_id;
+
+
+--
 -- TOC entry 219 (class 1259 OID 32882)
 -- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: docker
 --
@@ -253,7 +295,7 @@ CREATE SEQUENCE public.users_user_id_seq
 ALTER SEQUENCE public.users_user_id_seq OWNER TO docker;
 
 --
--- TOC entry 3414 (class 0 OID 0)
+-- TOC entry 3424 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: docker
 --
@@ -262,7 +304,7 @@ ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
 
 
 --
--- TOC entry 3230 (class 2604 OID 41071)
+-- TOC entry 3238 (class 2604 OID 41071)
 -- Name: participants participant_id; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -270,7 +312,7 @@ ALTER TABLE ONLY public.participants ALTER COLUMN participant_id SET DEFAULT nex
 
 
 --
--- TOC entry 3224 (class 2604 OID 32796)
+-- TOC entry 3232 (class 2604 OID 32796)
 -- Name: subjects subject_id; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -278,7 +320,7 @@ ALTER TABLE ONLY public.subjects ALTER COLUMN subject_id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 3229 (class 2604 OID 41057)
+-- TOC entry 3237 (class 2604 OID 41057)
 -- Name: tutoring tutoring_id; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -286,7 +328,7 @@ ALTER TABLE ONLY public.tutoring ALTER COLUMN tutoring_id SET DEFAULT nextval('p
 
 
 --
--- TOC entry 3225 (class 2604 OID 32876)
+-- TOC entry 3233 (class 2604 OID 32876)
 -- Name: usercredentials user_credentials_id; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -294,7 +336,7 @@ ALTER TABLE ONLY public.usercredentials ALTER COLUMN user_credentials_id SET DEF
 
 
 --
--- TOC entry 3227 (class 2604 OID 32886)
+-- TOC entry 3235 (class 2604 OID 32886)
 -- Name: users user_id; Type: DEFAULT; Schema: public; Owner: docker
 --
 
@@ -302,22 +344,20 @@ ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.u
 
 
 --
--- TOC entry 3403 (class 0 OID 41068)
+-- TOC entry 3413 (class 0 OID 41068)
 -- Dependencies: 224
 -- Data for Name: participants; Type: TABLE DATA; Schema: public; Owner: docker
 --
 
-INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (223, 48, 28);
 INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (224, 48, 27);
 INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (225, 48, 22);
-INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (213, 45, 28);
-INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (217, 47, 28);
+INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (230, 49, 31);
+INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (232, 49, 28);
 INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (221, 47, 22);
-INSERT INTO public.participants (participant_id, user_id, tutoring_id) VALUES (222, 47, 29);
 
 
 --
--- TOC entry 3395 (class 0 OID 32793)
+-- TOC entry 3405 (class 0 OID 32793)
 -- Dependencies: 216
 -- Data for Name: subjects; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -332,7 +372,7 @@ INSERT INTO public.subjects (subject_id, name) VALUES (7, 'Science');
 
 
 --
--- TOC entry 3401 (class 0 OID 41054)
+-- TOC entry 3411 (class 0 OID 41054)
 -- Dependencies: 222
 -- Data for Name: tutoring; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -344,10 +384,11 @@ INSERT INTO public.tutoring (tutoring_id, date, price, creator_id, subject_id, d
 INSERT INTO public.tutoring (tutoring_id, date, price, creator_id, subject_id, description, duration) VALUES (30, '2024-02-28 11:00:00', 120.00, 47, 5, 'What a lovely day to learn something new', '02:00:00');
 INSERT INTO public.tutoring (tutoring_id, date, price, creator_id, subject_id, description, duration) VALUES (31, '2024-02-06 12:30:00', 40.00, 48, 1, 'Hey, the best teacher here!', '00:45:00');
 INSERT INTO public.tutoring (tutoring_id, date, price, creator_id, subject_id, description, duration) VALUES (29, '2024-05-05 12:12:00', 25.00, 45, 3, 'I will teach you something difficult in easy way', '02:30:00');
+INSERT INTO public.tutoring (tutoring_id, date, price, creator_id, subject_id, description, duration) VALUES (32, '2024-02-12 06:00:00', 62.00, 49, 1, 'I will teach you something useless', '00:45:00');
 
 
 --
--- TOC entry 3397 (class 0 OID 32873)
+-- TOC entry 3407 (class 0 OID 32873)
 -- Dependencies: 218
 -- Data for Name: usercredentials; Type: TABLE DATA; Schema: public; Owner: docker
 --
@@ -359,15 +400,19 @@ INSERT INTO public.usercredentials (user_credentials_id, name, surname, address,
 INSERT INTO public.usercredentials (user_credentials_id, name, surname, address, date_of_join, city) VALUES (78, 'Admin', 'Adminowski', NULL, '2024-01-25 13:36:33.522357+00', 'Toronto');
 INSERT INTO public.usercredentials (user_credentials_id, name, surname, address, date_of_join, city) VALUES (69, 'Michał', 'Besser', NULL, '2024-01-25 12:27:22.486891+00', 'Stalowa Wola');
 INSERT INTO public.usercredentials (user_credentials_id, name, surname, address, date_of_join, city) VALUES (77, 'Michał', 'Grabski', NULL, '2024-01-25 13:19:14.155194+00', 'Stalowa Wola');
+INSERT INTO public.usercredentials (user_credentials_id, name, surname, address, date_of_join, city) VALUES (79, 'Michał', 'Nowak', NULL, '2024-01-25 13:59:05.281179+00', 'Lodz');
+INSERT INTO public.usercredentials (user_credentials_id, name, surname, address, date_of_join, city) VALUES (80, 'Andrew', 'Tom', NULL, '2024-01-25 14:08:16.451466+00', '');
 INSERT INTO public.usercredentials (user_credentials_id, name, surname, address, date_of_join, city) VALUES (73, 'Will ', 'Smith', NULL, '2024-01-25 12:44:09.686608+00', 'Warsaw');
 
 
 --
--- TOC entry 3399 (class 0 OID 32883)
+-- TOC entry 3409 (class 0 OID 32883)
 -- Dependencies: 220
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: docker
 --
 
+INSERT INTO public.users (user_id, email, password, user_credentials_id, privileged) VALUES (49, 'j@x.pl', '$2y$10$JV1F8Eb3UbBSAxpiqVQWTORefe5Unj.iaH3VwxI9fiibjA7/hcD.C', 79, false);
+INSERT INTO public.users (user_id, email, password, user_credentials_id, privileged) VALUES (50, 'andrzej@gmail.com', '$2y$10$3lFhiMiqQF5/488TU6aoCOQ8di5jmpqbchMPU6Uqq5nBCVlCeQODu', 80, false);
 INSERT INTO public.users (user_id, email, password, user_credentials_id, privileged) VALUES (43, 'a@gmail.com', '$2y$10$A3L9EeIfJyIdL1D8oONkq.QNV5OdhGWUNO5MMqb6XWVWUaZYbEHCy', 73, true);
 INSERT INTO public.users (user_id, email, password, user_credentials_id, privileged) VALUES (48, 'admin@example.com', '$2y$10$la8avdZXNMGzeL2cG/q4n.arHlFG1.xpsVlj68KpnOt2kGcAXtkS.', 78, false);
 INSERT INTO public.users (user_id, email, password, user_credentials_id, privileged) VALUES (45, 'admin@example.org', '$2y$10$LyOCvYeCNbkoL09AvAqtWu0trQa49YVd45FGi.p8fulbAhpyVjdIK', 75, true);
@@ -379,16 +424,16 @@ INSERT INTO public.users (user_id, email, password, user_credentials_id, privile
 
 
 --
--- TOC entry 3415 (class 0 OID 0)
+-- TOC entry 3425 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: participants_participant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.participants_participant_id_seq', 225, true);
+SELECT pg_catalog.setval('public.participants_participant_id_seq', 232, true);
 
 
 --
--- TOC entry 3416 (class 0 OID 0)
+-- TOC entry 3426 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: subjects_subject_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
@@ -397,34 +442,34 @@ SELECT pg_catalog.setval('public.subjects_subject_id_seq', 6, true);
 
 
 --
--- TOC entry 3417 (class 0 OID 0)
+-- TOC entry 3427 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: tutoring_tutoring_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.tutoring_tutoring_id_seq', 31, true);
+SELECT pg_catalog.setval('public.tutoring_tutoring_id_seq', 32, true);
 
 
 --
--- TOC entry 3418 (class 0 OID 0)
+-- TOC entry 3428 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: usercredentials_user_credentials_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.usercredentials_user_credentials_id_seq', 78, true);
+SELECT pg_catalog.setval('public.usercredentials_user_credentials_id_seq', 80, true);
 
 
 --
--- TOC entry 3419 (class 0 OID 0)
+-- TOC entry 3429 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 48, true);
+SELECT pg_catalog.setval('public.users_user_id_seq', 50, true);
 
 
 --
--- TOC entry 3242 (class 2606 OID 41073)
+-- TOC entry 3250 (class 2606 OID 41073)
 -- Name: participants participants_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -433,7 +478,7 @@ ALTER TABLE ONLY public.participants
 
 
 --
--- TOC entry 3244 (class 2606 OID 41075)
+-- TOC entry 3252 (class 2606 OID 41075)
 -- Name: participants participants_user_id_tutoring_id_key; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -442,7 +487,7 @@ ALTER TABLE ONLY public.participants
 
 
 --
--- TOC entry 3232 (class 2606 OID 32798)
+-- TOC entry 3240 (class 2606 OID 32798)
 -- Name: subjects subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -451,7 +496,7 @@ ALTER TABLE ONLY public.subjects
 
 
 --
--- TOC entry 3240 (class 2606 OID 41061)
+-- TOC entry 3248 (class 2606 OID 41061)
 -- Name: tutoring tutoring_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -460,7 +505,7 @@ ALTER TABLE ONLY public.tutoring
 
 
 --
--- TOC entry 3234 (class 2606 OID 32881)
+-- TOC entry 3242 (class 2606 OID 32881)
 -- Name: usercredentials usercredentials_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -469,7 +514,7 @@ ALTER TABLE ONLY public.usercredentials
 
 
 --
--- TOC entry 3236 (class 2606 OID 32890)
+-- TOC entry 3244 (class 2606 OID 32890)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -478,7 +523,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3238 (class 2606 OID 32892)
+-- TOC entry 3246 (class 2606 OID 32892)
 -- Name: users users_user_credentials_id_key; Type: CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -487,7 +532,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3250 (class 2620 OID 41106)
+-- TOC entry 3258 (class 2620 OID 41106)
 -- Name: usercredentials trigger_set_date_of_join; Type: TRIGGER; Schema: public; Owner: docker
 --
 
@@ -495,7 +540,7 @@ CREATE TRIGGER trigger_set_date_of_join BEFORE INSERT ON public.usercredentials 
 
 
 --
--- TOC entry 3245 (class 2606 OID 41100)
+-- TOC entry 3253 (class 2606 OID 41100)
 -- Name: users fk_usercredentials; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -504,7 +549,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3248 (class 2606 OID 41107)
+-- TOC entry 3256 (class 2606 OID 41107)
 -- Name: participants participants_tutoring_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -513,7 +558,7 @@ ALTER TABLE ONLY public.participants
 
 
 --
--- TOC entry 3249 (class 2606 OID 41076)
+-- TOC entry 3257 (class 2606 OID 41076)
 -- Name: participants participants_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -522,7 +567,7 @@ ALTER TABLE ONLY public.participants
 
 
 --
--- TOC entry 3247 (class 2606 OID 41062)
+-- TOC entry 3255 (class 2606 OID 41062)
 -- Name: tutoring tutoring_subject_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -531,7 +576,7 @@ ALTER TABLE ONLY public.tutoring
 
 
 --
--- TOC entry 3246 (class 2606 OID 32893)
+-- TOC entry 3254 (class 2606 OID 32893)
 -- Name: users users_user_credentials_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: docker
 --
 
@@ -539,7 +584,7 @@ ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_user_credentials_id_fkey FOREIGN KEY (user_credentials_id) REFERENCES public.usercredentials(user_credentials_id);
 
 
--- Completed on 2024-01-25 13:54:45 UTC
+-- Completed on 2024-01-25 17:57:01 UTC
 
 --
 -- PostgreSQL database dump complete
