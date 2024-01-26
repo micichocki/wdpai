@@ -121,7 +121,7 @@ messages:hover{
     margin-left: 2rem;
     height: 1.4rem;
     margin-bottom: 0;
-    padding-right: 0.2rem;
+    text-align: center;
 }
 
 .options{
@@ -298,7 +298,7 @@ h4:hover{
     padding-left: .7rem;
     padding-right: .9rem;
     margin-top:0.7rem;
-    margin-left:1rem;
+    margin-left:2.5rem;
     transition: background-color 0.3s ease;
     margin-bottom: 1.6rem;
     text-align: center;

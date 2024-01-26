@@ -24,7 +24,7 @@ class SecurityController extends AppController
             return $this->render('login');
         }
 
-        $email = $_POST['email'];
+        $email = strtolower($_POST['email']);
         $password = $_POST['password'];
 
         $user = $this->userRepository->getUser($email);
@@ -58,10 +58,10 @@ class SecurityController extends AppController
             return $this->render('register');
         }
     
-        $email = $_POST['email'];
+        $email = strtolower($_POST['email']); 
         $password = $_POST['password'];
         $retype_password = $_POST['retype-password'];
-
+    
         if (strlen($email) < 4) {
             return $this->render('register', ['messages' => ['Email is too short.']]);
         }
@@ -77,7 +77,7 @@ class SecurityController extends AppController
         $allUsers = $this->userRepository->getAllUsers();
     
         foreach ($allUsers as $existingUser) {
-            if ($existingUser->getEmail() === $email) {
+            if (strtolower($existingUser->getEmail()) === $email) {
                 return $this->render('register', ['messages' => ['User Exists']]);
             }
         }
@@ -88,6 +88,7 @@ class SecurityController extends AppController
     
         return $this->render('login', ['messages' => ['Registration successful!']]);
     }
+    
 
     public function logout()
     {
@@ -106,7 +107,7 @@ class SecurityController extends AppController
         $this->isSessionCorrect();
         $userId = $_SESSION['user_id'];
         $user = $this->userRepository->getUserById($userId);
-    
+
         if ($this->isGet()) {
             if ($user->getUserCredentials()) {
                 $url = "http://$_SERVER[HTTP_HOST]";
@@ -118,15 +119,20 @@ class SecurityController extends AppController
             $name = $_POST['name'];
             $surname = $_POST['surname'];
             $city = $_POST['city'];
-    
-            $name = ucfirst($name);
-            $surname = ucfirst($surname);
-            $city = ucfirst($city);
-    
-            if (strlen($name) >= 2 && strlen($name) <= 20 && strlen($surname) >= 2 && strlen($surname) <= 20) {    
+
+            if ($this->isValidInput($name) && $this->isValidInput($surname) && $this->isValidInput($city)) {
+                $name = ucfirst($name);
+                $surname = ucfirst($surname);
+                $city = ucfirst($city);
+            } else {
+                return $this->render('user_credentials', ['messages' => ["Invalid input. Please avoid special characters."]]);
+            }
+
+
+            if (strlen($name) >= 2 && strlen($name) <= 20 && strlen($surname) >= 2 && strlen($surname) <= 20) {
                 $newUserCredential = new UserCredentials($name, $surname, $city);
                 $this->userCredentialsRepository->addUserCredentials($userId, $newUserCredential);
-    
+
                 $url = "http://$_SERVER[HTTP_HOST]";
                 header("Location: {$url}/dashboard");
                 exit();
@@ -138,6 +144,11 @@ class SecurityController extends AppController
         }
     }
 
+    private function isValidInput($input) {
+        return !preg_match('/\b(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE)\b/i', $input);
+    }
+
+  
     private function isSessionCorrect()
     {
         if (!isset($_SESSION['user_id'])) {

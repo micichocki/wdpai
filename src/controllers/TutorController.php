@@ -65,7 +65,7 @@ class TutorController extends AppController
                 $this->render('register');
             }
         } elseif ($this->isPost()) {
-            $email = $_POST['email'];
+            $email = strtolower($_POST['email']);
             $city = $_POST['city'];
             $userCredentials = $user->getUserCredentials();
     
@@ -76,11 +76,12 @@ class TutorController extends AppController
     
             if (!empty($city)) {
                 $city = ucfirst($city);
-                if (!preg_match('/^[A-Za-z]+$/', $city)) {
+                if (!preg_match('/^[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ\s]+$/', $city)) {
                     return $this->render('profile', ['messages' => ['Invalid city format. Use only letters.'], 'user' => $user]);
                 }
                 $userCredentials->setCity($city);
             }
+            
     
             if (!empty($email)) {
                 $user->setEmail($email);
