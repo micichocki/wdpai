@@ -232,9 +232,7 @@ input {
 }
 
 @media(max-width:1024px){
-    main{
-        margin-top: 2.5rem;
-    }
+
     .welcome-text{
         font-size: 5rem;
         width: 27rem;

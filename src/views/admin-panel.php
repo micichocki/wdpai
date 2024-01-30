@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Raleway:wght@800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/global.css">
+    <link rel="stylesheet" href="/public/css/main-nav.css">
     <link rel="stylesheet" href="/public/css/admin-panel.css">
     <script src="../../public/js/admin-panel.js"></script>
 </head>

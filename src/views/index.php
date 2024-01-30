@@ -30,7 +30,7 @@
     <main>
         <h1 class='welcome-text'>Welcome to Kappa, the Tutoring App!</h1>
         <p class='welcome-sub-text'>Get access to the best tutors in your area. Click the button below to get started:</p>
-        <button id="submit-button"><a class="button-a-tag" href="/register">Start</a></button>
+        <a class="button-a-tag" href="/register"><button id="submit-button">Start</button></a>
         <a class='illustration-author' href="https://storyset.com/web" target="_blank">illustrations by Storyset</a>
 
     </main>

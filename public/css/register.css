@@ -322,9 +322,7 @@ input {
     .main-content {
         display: none;
       }
-      .phone-container{
-        margin-left:2.5rem;
-      }
+
 
       .info-container{
         width: 14rem;
@@ -332,7 +330,6 @@ input {
         display:flex;
         justify-content: center;
         align-items: center;
-        margin-left: 2rem;
       }
       .welcome-sub-text{
         font-size: 2rem;

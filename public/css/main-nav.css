@@ -1,0 +1,24 @@
+.nav-icons{
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    margin-left: auto;
+    margin-top:1.1rem
+}
+
+#home-icon{
+    margin-top:0.60rem;
+    width:3.6rem;
+}
+#plus-icon{
+    margin-top:0.85rem;
+    width:3.6rem;
+}
+#message-icon{
+    margin-top:0.85rem;
+    width:3.6rem;
+}
+#profile-icon{
+    margin-top:0.7rem;
+    width:3.6rem;
+}
