@@ -29,24 +29,27 @@ class AdminController extends AppController
     {
         header('Content-Type: application/json');
     
-        if ($this->isPost()) {
-            $data = json_decode(file_get_contents("php://input"));
-    
-            if (isset($data->userId)) {
-                $userId = $data->userId;
-                $success = $this->userRepository->deleteUser($userId);
-                if ($success) {
-                    echo json_encode(['success' => true]);
-                } else {
-                    echo json_encode(['success' => false, 'error' => 'Failed to remove user']);
-                }
-            } else {
-                http_response_code(400);
-                echo json_encode(['success' => false, 'error' => 'Invalid request']);
-            }
-        } else {
+        if (!$this->isPost()) {
             http_response_code(405);
             echo json_encode(['success' => false, 'error' => 'Invalid request method']);
+            return;
+        }
+    
+        $data = json_decode(file_get_contents("php://input"));
+    
+        if (!isset($data->userId)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid request']);
+            return;
+        }
+    
+        $userId = $data->userId;
+        $success = $this->userRepository->deleteUser($userId);
+    
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to remove user']);
         }
     }
 }
